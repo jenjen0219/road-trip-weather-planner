@@ -23,6 +23,20 @@ so that i can properly pack my bags with the appropriate outfits
 - error checking
 - presentation prep
 
+##Acceptance Criteria
+
+GIVEN a road trip weather planner
+WHEN I search for a city at a specific timeframe
+THEN I am presented with the weather conditions for the specified days and that city and it is added to my road trip AND depending on the temp range I will view a list of possible outfit items to wear
+WHEN I view current weather conditions for that city
+THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
+WHEN I click on a city in the search history
+THEN I am again presented with current and future conditions for that city
+WHEN I add a city to my road trip planner 
+THEN I can also view the distance and time it'll take to drive between locations 
+
+
+
 
 
 
