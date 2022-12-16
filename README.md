@@ -35,6 +35,11 @@ THEN I am again presented with current and future conditions for that city
 WHEN I add a city to my road trip planner 
 THEN I can also view the distance and time it'll take to drive between locations 
 
+##MVP
+
+In order to meet the requirements of having two seperate API's we are going to build an application that allows you to start planning a roadtrip that includes details about distance, time of travel, and the weather conditions for the total of days you plan to stay that include clothing suggestions to pack appropiate clothing. Each item that is added should appear on a list that our user can switch around and or click to then view the weather conditions and adjust how many days they will spend in that location. 
+
+
 
 
 
