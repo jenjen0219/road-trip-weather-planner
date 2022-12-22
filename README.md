@@ -55,18 +55,43 @@ START BUTTON
 - will need to navigate to the dashboard through the use of an a link to another html file
 
 SAVE BUTTON
-- verify the city name entered 
-- verify the days entered is more than or equal to 0
 - need to create variables for elements being manipulated in DOM 
-- fetch the api response using the city name
+      VARIABLES FOR GEOLOCATION API 
+      - city name 
+      - state 
+      VARIABLE FOR WEATHER API
+      - the starting date variable
+      - the duration of days variable
+      - the coordinates of the city
+      VARIABLE FOR MAPPING API 
+      - geolocation api stored variable for coordinates of first location
+      - geolocation api stored variable for coordinates of second location
+
+      DOM ELEMENTS 
+      - starting date 
+      - first entry: starting from, city name/state, day of duration <--should only happen once when there are no other cities in storage
+      - first entry: date followed by temperature forecast
+      - additional entry: travel time from first location to additional along with the amount of miles <--should occur everytime we hit save for an additional entry
+      - additional entry: stop #, city name, length of stay
+      - additional entry: date followed by temperature forecast 
+    
+
+- verify the city name entered and if anything was even entered to begin with
+- verify the days entered is more than or equal to 0
+- verify the date entered is either today or in the future and if there is anything in the date entry at all
+
+- fetch geolocation api to convert the city name into coordinates and save it to a variable for later use
+- fetch the weather api response using the coordinates obtained from the previous fetch
+- fetch the mapping api info 
 - insert data from weather api response into variables 
+
 - save variables into localstorage
     - when it comes to the starting point we are only going to obtain the weather api data 
     - once the user hits save for their first stop then we will also account for the map api since now we have the necessary datapoints for it
 - weather data and map data (when its not the first) will display onto the right hand side of our DOM
 
 ADD STOP BUTTON
-- an input row will be added to the DOM for another entry to the road trip weather planner
+- an input row will be added to the DOM for another entry to the road trip weather planner which will need to be created with a for loop in order to grow with the ongoing count of each stop
 
 RESET BUTTON 
 - will remove everything that was added by the user from the DOM as well as in the localStorage
