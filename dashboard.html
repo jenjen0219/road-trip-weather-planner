@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Road Trip Weather Planner</title>
+</head>
+
+<body>
+    <header>
+        <h3>Road Trip Weather Planner</h3>
+    </header>
+
+    <main>
+        <section class="form-container">
+            <form>
+                <div class="row" id="input-row">
+                    <label for="departure-date">
+                        Depareture Date:
+                    </label>
+                    <input type="date" name="departure-date" class="validate">
+                </div>
+                </div>
+
+                <div class="row" id="input-row">
+                    <div class="input-field col s6">
+                        <label for="starting-point">
+                            Starting Point:
+                        </label>
+                        <input type="text" name="starting-point" placeholder="City">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="starting-point">
+                            Length of Stay (day):
+                        </label>
+                        <input type="number" name="days-0" placeholder="How many days">
+                    </div>
+                </div>
+
+                <div class="row" id="input-row">
+                    <div class="input-field col s6">
+                        <label for="stop-1">
+                            Stop 1:
+                        </label>
+                        <input type="text" name="stop-1" placeholder="City">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="starting-point">
+                            Length of Stay (day):
+                        </label>
+                        <input type="number" name="days-1" placeholder="How many days">
+                    </div>
+                </div>
+
+                <div class="row" id="btn-container">
+                    <button id="add-stop-btn">Add Stop</button>
+                    <button id="reset-btn">Reset Form</button>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="result-container">
+            <h5>Weather Forecast Along Your Travel Route</h5>
+            <div class="weather-forecast">
+                Weather info goes here
+            </div>
+            <button id="email-btn">
+                <a href="mailto:">
+                    Email this
+                </a>
+            </button>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>Footer goes here</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
