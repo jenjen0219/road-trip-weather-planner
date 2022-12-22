@@ -91,7 +91,7 @@ SAVE BUTTON
 - weather data and map data (when its not the first) will display onto the right hand side of our DOM
 
 ADD STOP BUTTON
-- an input row will be added to the DOM for another entry to the road trip weather planner
+- an input row will be added to the DOM for another entry to the road trip weather planner which will need to be created with a for loop in order to grow with the ongoing count of each stop
 
 RESET BUTTON 
 - will remove everything that was added by the user from the DOM as well as in the localStorage

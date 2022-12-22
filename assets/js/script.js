@@ -8,7 +8,7 @@
 //       - geolocation api stored variable for coordinates for two locations
 
 
-var test = document.getElementById("test");
+
 
 //this function is going to verify that the user entered the city name correctly and also fetch an API response of which we will grab the lat and lon coordinates
 function cityCoordinates() {
@@ -43,18 +43,29 @@ function cityCoordinates() {
 
 
 };
-
-test.addEventListener('click', cityCoordinates);
+var test = document.getElementById("save-btn");
 
 //in this function we are going to fetch the api response that we will use to give a weather forecast for each city
 function cityWeather() {
 
-    var startDate = document.getElementById("");
+    var departDate = document.getElementById("departure-date").val();
 
+    //this is rearranging our date to the format accepetted by the weather api 
+    const unformattedDate = departDate.split('/');
+    const formattedDate = unformattedDate[2] + "-" + unformattedDate[0] + "-" + unformattedDate[1];
     //i think we might have to do some work to translate the date variable into either UNIX time (that is, seconds since midnight GMT on 1 Jan 1970) or a string formatted as follows: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS][timezone].
-    var lengthOfStay = document.getElementById("");
-    var date;
+    // var lengthOfStay = document.getElementById("");
+    var date = formattedDate + 'T12:00:00';
     var APIKey = '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58';
+
+    var lonCoord = -122.335167;
+    var latCoord = 47.608013;
+    var tempMin;
+    var tempMax;
+
+    var humidity;
+    var windSpeed;
+
 
     const options = {
         method: 'GET',
@@ -68,6 +79,12 @@ function cityWeather() {
     fetch('https://dark-sky.p.rapidapi.com/' + latCoord + ',' + lonCoord + ',' + date + '?units=uk2', options)
         .then(response => response.json())
         .then(data => {
+            tempMin = daily.data[0].temperatureMin;
+            tempMax = daily.data[0].temperatureMax;
+            humidity = daily.data[0].humidity;
+            windSpeed = daily.data[0].windspeed;
+
+            console.log(tempMin, tempMax, humidity, windSpeed);
 
         })
         .catch(err => console.error(err));
@@ -75,6 +92,10 @@ function cityWeather() {
 
 
 }
+
+test.addEventListener('click', cityWeather);
+
+
 const addStopBtn = document.querySelector("#add-stop-btn");
 const formEl = document.querySelector("form");
 const inputRowEl = document.querySelectorAll("#input-row");
