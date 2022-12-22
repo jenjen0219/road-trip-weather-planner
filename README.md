@@ -56,12 +56,16 @@ START BUTTON
 
 SAVE BUTTON
 - need to create variables for elements being manipulated in DOM 
+      VARIABLES FOR GEOLOCATION API 
+      - city name 
+      - state 
       VARIABLE FOR WEATHER API
       - the starting date variable
       - the duration of days variable
-      - the city name variable
+      - the coordinates of the city
       VARIABLE FOR MAPPING API 
-      - geolocation api stored variable for coordinates for two locations
+      - geolocation api stored variable for coordinates of first location
+      - geolocation api stored variable for coordinates of second location
 
       DOM ELEMENTS 
       - starting date 
