@@ -26,3 +26,7 @@ const insertInputRow = function (event) {
 }
 
 addStopBtn.addEventListener("click", insertInputRow)
+
+
+const unformattedDate = departDate.split('/');
+const formattedDate = unformattedDate[2] + "/" + unformattedDate[0] + "/" + unformattedDate[1];
