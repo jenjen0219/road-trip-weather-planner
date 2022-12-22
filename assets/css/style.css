@@ -1,0 +1,119 @@
+/* :root {
+
+} */
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.75rem;
+    line-height: 1.5;
+    color: var(--medium);
+    background-color: var(--base);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-bottom: 0.625rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+h1 {
+    font-size: 4.5rem;
+}
+
+h2 {
+    font-size: 4rem;
+}
+
+h3 {
+    font-size: 3.5rem;
+}
+
+h4 {
+    font-size: 3rem;
+}
+
+h5 {
+    font-size: 2.5rem;
+}
+
+h6 {
+    font-size: 2rem;
+}
+
+/* INDEX PAGE */
+.index-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 7rem 0 1rem 0;
+}
+
+.index-main {
+    text-align: center;
+    padding: 1rem;
+}
+
+#start-btn {
+    margin: 1.5rem;
+    padding: 0.5rem 1rem;
+}
+
+/* DASHBOARD PAGE */
+header {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: salmon;
+}
+
+main {
+    width: 100%;
+    min-height: 80vh;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.form-container,
+.result-container {
+    width: 45%;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 1.5rem;
+    border: 1px solid red;
+}
+
+form {
+    width: 100%;
+    height: min-content;
+}
+
+#btn-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 0 auto;
+}
+
+footer {
+    width: 100%;
+    height: 10vh;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+}
