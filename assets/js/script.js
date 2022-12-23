@@ -101,6 +101,42 @@ const buttonContainer = document.querySelector("#btn-container");
 const addStopBtn = document.querySelector("#add-stop-btn");
 const resetBtn = document.querySelector("#reset-btn");
 
+// Populate the list of autocomplete options in the city input box.
+document.addEventListener('DOMContentLoaded', function () {
+    const options = {
+        data: {
+            "Boston": null,
+            "Seattle": null,
+            "New York": null
+        },
+        limit: 5,
+        minLength: 1
+    }
+    const cityInputEl = document.querySelectorAll('.autocomplete');
+    M.Autocomplete.init(cityInputEl, options);
+});
+
+// Create and render the select options for state.
+const handleStateOptions = function () {
+    const stateSelectEl = document.querySelectorAll("select");
+
+    const states = [
+        "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+    ]
+
+    for (let i = 0; i < stateSelectEl.length; i++) {
+        const currentSelectEl = stateSelectEl[i];
+        for (let j = 0; j < states.length; j++) {
+            const currentState = states[j];
+            const option = document.createElement("option");
+            option.setAttribute("value", currentState);
+            option.textContent = currentState;
+            currentSelectEl.append(option);
+        };
+    }
+    M.FormSelect.init(stateSelectEl);
+};
+
 // The insertInputRow function creates a new input row in the form.
 const insertInputRow = function (event) {
     event.preventDefault();
@@ -114,25 +150,29 @@ const insertInputRow = function (event) {
     newInputRow.classList = "row";
     newInputRow.id = "input-row";
     newInputRow.innerHTML =
-        `    <p>Stop ${newStopNum}</p>
-    <div class="input-field col s4">
-        <label class="active" for="city-${newStopNum}">
-            City:
-        </label>
-        <input type="text" name="city-${newStopNum}" placeholder="e.g. Missoula">
-    </div>
-    <div class="input-field col s4">
-        <label class="active" for="state-${newStopNum}">
-            State:
-        </label>
-        <input type="text" name="state-${newStopNum}" placeholder="e.g. Montana">
-    </div>
-    <div class="input-field col s4">
-        <label class="active" for="state-${newStopNum}">
-            Length of Stay (day):
-        </label>
-        <input type="number" min="0" name="days-${newStopNum}" placeholder="How many days">
-    </div>`
+        `
+<p>Stop ${newStopNum}</p>
+<div class="input-field col s4">
+    <label class="active" for="city-${newStopNum}">
+        City:
+    </label>
+    <input class="autocomplete" type="text" name="city-${newStopNum}" placeholder="Enter city">
+</div>
+<div class="input-field col s4">
+    <label class="active" for="state-${newStopNum}">
+        State:
+    </label>
+    <select>
+        <option value="" disabled selected>Choose state</option>
+    </select>
+</div>
+<div class="input-field col s4">
+    <label class="active" for="state-${newStopNum}">
+        Length of Stay (day):
+    </label>
+    <input type="number" min="0" name="days-${newStopNum}" placeholder="How many days">
+</div>
+`
     formEl.insertBefore(newInputRow, buttonContainer);
 }
 
@@ -142,7 +182,8 @@ const resetForm = function (event) {
 
     formEl.innerHTML = "";
     formEl.innerHTML =
-        `    <div class="row" id="input-row">
+        `
+<div class="row" id="input-row">
     <p>Depareture Date</p>
     <div class="input-field col s12">
         <input id="departure-date" type="date" name="departure-date" class="validate">
@@ -155,13 +196,15 @@ const resetForm = function (event) {
         <label class="active" for="city-0">
             City:
         </label>
-        <input type="text" name="city-0" placeholder="e.g. Seattle">
+        <input class="autocomplete" type="text" name="city-0" placeholder="Enter city">
     </div>
     <div class="input-field col s4">
         <label class="active" for="state-0">
             State:
         </label>
-        <input type="text" name="state-0" placeholder="e.g. Washington">
+        <select>
+            <option value="" disabled selected>Choose state</option>
+        </select>
     </div>
     <div class="input-field col s4">
         <label class="active" for="day-0">
@@ -177,13 +220,15 @@ const resetForm = function (event) {
         <label class="active" for="city-1">
             City:
         </label>
-        <input type="text" name="city-1" placeholder="e.g. Missoula">
+        <input class="autocomplete" type="text" name="city-1" placeholder="Enter city">
     </div>
     <div class="input-field col s4">
         <label class="active" for="state-1">
             State:
         </label>
-        <input type="text" name="state-1" placeholder="e.g. Montana">
+        <select>
+            <option value="" disabled selected>Choose state</option>
+        </select>
     </div>
     <div class="input-field col s4">
         <label class="active" for="state-1">
@@ -197,10 +242,19 @@ const resetForm = function (event) {
     <button class="button" id="add-stop-btn">+ Add Stop</button>
     <button class="button" id="reset-btn">Reset Form</button>
     <button class="button" id="save-btn" type="submit">Save</button>
-</div>`
-}
+</div>
+`
+};
 
 // The insertInputRow function is called when the add stop button is clicked.
-addStopBtn.addEventListener("click", insertInputRow);
+addStopBtn.addEventListener("click", function (event) {
+    insertInputRow(event);
+    handleStateOptions();
+});
 // The resetForm function is called when the reset form button is clicked.
-resetBtn.addEventListener("click", resetForm);
+resetBtn.addEventListener("click", function (event) {
+    resetForm(event);
+    handleStateOptions();
+});
+
+handleStateOptions();
