@@ -248,14 +248,14 @@ const resetForm = function (event) {
 }
 
 
-for (i = 0; i < testingEl.childElementCount;i++) {
-        var cityName = document.getElementById("cityName"[i]);
-        var los = document.getElementById("los"[i]);
+// for (i = 0; i < testingEl.childElementCount;i++) {
+//         var cityName = document.getElementById("cityName"[i]);
+//         var los = document.getElementById("los"[i]);
 
 
         
 
-}
+// }
 
 // The insertInputRow function is called when the add stop button is clicked.
 addStopBtn.addEventListener("click", function (event) {
