@@ -1,148 +1,143 @@
-// VARIABLES FOR GEOLOCATION API
-//       - city name
-//       VARIABLE FOR WEATHER API
-//       - the starting date variable
-//       - the duration of days variable
-//       - the coordinates of the city
-//       VARIABLE FOR MAPPING API
-//       - geolocation api stored variable for coordinates for two locations
+// // VARIABLES FOR GEOLOCATION API
+// //       - city name
+// //       VARIABLE FOR WEATHER API
+// //       - the starting date variable
+// //       - the duration of days variable
+// //       - the coordinates of the city
+// //       VARIABLE FOR MAPPING API
+// //       - geolocation api stored variable for coordinates for two locations
 
 
-//this function is going to verify that the user entered the city name correctly and also fetch an API response of which we will grab the lat and lon coordinates
-function cityCoordinates () {
-    //here we are declaring a variable that is where the user will enter the city name
-    var cityName = 'seattle';
-    var state = 'WA';
-    var lonCoord = 0;
-    var latCoord = 0;
-    var APIKey = '4ef3772979be6dce53798914fca77969';
+// //this function is going to verify that the user entered the city name correctly and also fetch an API response of which we will grab the lat and lon coordinates
+// function cityCoordinates () {
+//     //here we are declaring a variable that is where the user will enter the city name
+//     var cityName = 'seattle';
+//     var state = 'WA';
+//     var lonCoord = 0;
+//     var latCoord = 0;
+//     var APIKey = '4ef3772979be6dce53798914fca77969';
 
-    //this is to ensure that the user
-    // if (cityName == "" || isNaN(cityName)) {
+//     //this is to ensure that the user
+//     // if (cityName == "" || isNaN(cityName)) {
 
-    // }
+//     // }
 
-    var queryURLCoordinates = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityName + ',' + state + ',US&appid=' + APIKey;
+//     var queryURLCoordinates = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityName + ',' + state + ',US&appid=' + APIKey;
 
-    fetch(queryURLCoordinates)
-        .then(response => response.json())
+//     fetch(queryURLCoordinates)
+//         .then(response => response.json())
 
-        .then(data => {
-            lonCoord = data[0].lon;
-            latCoord = data[0].lat;
-            console.log(lonCoord);
-            console.log(latCoord);
+//         .then(data => {
+//             lonCoord = data[0].lon;
+//             latCoord = data[0].lat;
+//             console.log(lonCoord);
+//             console.log(latCoord);
 
-        })
+//         })
 
-        .catch(function (error) {
-            console.error(error);
-        });
-
-
+//         .catch(function (error) {
+//             console.error(error);
+//         });
 
 
-};
-var test = document.getElementById("save-btn");
+// };
+// var test = document.getElementById("save-btn");
 
-//in this function we are going to fetch the api response that we will use to give a weather forecast for each city
-function cityWeather() {
+// //in this function we are going to fetch the api response that we will use to give a weather forecast for each city
+// function cityWeather (event) {
 
-    var departDate = document.getElementById("departure-date").val();
+//     event.preventDefault();
 
-    //this is rearranging our date to the format accepetted by the weather api 
-    const unformattedDate = departDate.split('/');
-    const formattedDate = unformattedDate[2] + "-" + unformattedDate[0] + "-" + unformattedDate[1];
-    //i think we might have to do some work to translate the date variable into either UNIX time (that is, seconds since midnight GMT on 1 Jan 1970) or a string formatted as follows: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS][timezone].
-    // var lengthOfStay = document.getElementById("");
-    var date = formattedDate + 'T12:00:00';
-    var APIKey = '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58';
+//     var departDate = document.getElementById("departure-date").value;
 
-    var lonCoord = -122.335167;
-    var latCoord = 47.608013;
-    var tempMin;
-    var tempMax;
+//     //this is rearranging our date to the format accepetted by the weather api
 
-    var humidity;
-    var windSpeed;
+//     //i think we might have to do some work to translate the date variable into either UNIX time (that is, seconds since midnight GMT on 1 Jan 1970) or a string formatted as follows: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS][timezone].
+//     // var lengthOfStay = document.getElementById("");
+//     var date = departDate + 'T12:00:00';
 
+//     var APIKey = '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58';
 
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58',
-            'X-RapidAPI-Host': 'dark-sky.p.rapidapi.com'
-        }
-    };
+//     var lonCoord = -122.335167;
+//     var latCoord = 47.608013;
+//     var tempMin;
+//     var tempMax;
+
+//     var humidity;
+//     var windSpeed;
 
 
-    fetch('https://dark-sky.p.rapidapi.com/' + latCoord + ',' + lonCoord + ',' + date + '?units=uk2', options)
-        .then(response => response.json())
-        .then(data => {
-            tempMin = daily.data[0].temperatureMin;
-            tempMax = daily.data[0].temperatureMax;
-            humidity = daily.data[0].humidity;
-            windSpeed = daily.data[0].windspeed;
-
-            console.log(tempMin, tempMax, humidity, windSpeed);
-
-        })
-        .catch(err => console.error(err));
+//     const options = {
+//         method: 'GET',
+//         headers: {
+//             'X-RapidAPI-Key': '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58',
+//             'X-RapidAPI-Host': 'dark-sky.p.rapidapi.com'
+//         }
+//     };
 
 
+//     fetch('https://dark-sky.p.rapidapi.com/' + latCoord + ',' + lonCoord + ',' + date + '?units=uk2', options)
+//         .then(response => response.json())
+//         .then(data => {
+//             tempMin = data.daily.data[0].temperatureMin;
+//             tempMax = data.daily.data[0].temperatureMax;
+//             humidity = data.daily.data[0].humidity;
+//             windSpeed = data.daily.data[0].windSpeed;
 
-};
+//             console.log(tempMin, tempMax, humidity, windSpeed);
+
+//         })
+//         .catch(err => console.error(err));
 
 
-function cityMapping(event) {
-    event.preventDefault();
-    var lonCoord = -122.335167;
-    var latCoord = 47.608013;
 
-    var coord = latCoord + ',' + lonCoord
-    var testest;
+// }
 
-    var origin = coord;
-    var destinations = '40.630099,-73.993521;40.644895,-74.013818;40.627177,-73.980853';
-    var testduration;
-    var testdistance;
+// test.addEventListener('click', cityWeather);
 
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58',
-            'X-RapidAPI-Host': 'trueway-matrix.p.rapidapi.com'
-        }
-    };
-
-    fetch('https://trueway-matrix.p.rapidapi.com/CalculateDrivingMatrix?origins=' + origin + '&destinations=' + destinations, options)
-        .then(response => response.json())
-        .then(data => {
-            testdistance = data.distances[0];
-            testduration = data.durations[0];
-
-            testest = testdistance[0];
-            console.log(testest);
-
-            console.log(typeof testdistance);
-            console.log(testdistance);
-            console.log(coord);
-        })
-        .catch(err => console.error(err));
-
-    var testingEl = document.getElementById("testContainer")
-
-    console.log(testingEl.childElementCount);
-
-};
-
-test.addEventListener('click', cityMapping);
 
 // Save reference to important DOM elements.
 const formEl = document.querySelector("form");
 const buttonContainer = document.querySelector("#btn-container");
 const addStopBtn = document.querySelector("#add-stop-btn");
 const resetBtn = document.querySelector("#reset-btn");
+const saveBtn = document.querySelector("#save-btn");
+
+// Populate the list of autocomplete options in the city input box.
+document.addEventListener('DOMContentLoaded', function () {
+    const options = {
+        data: {
+            "Boston": null,
+            "Seattle": null,
+            "New York": null
+        },
+        limit: 5,
+        minLength: 1
+    }
+    const cityInputEl = document.querySelectorAll('.autocomplete');
+    M.Autocomplete.init(cityInputEl, options);
+});
+
+// Create and render the select options for state.
+const handleStateOptions = function () {
+    const stateSelectEl = document.querySelectorAll("select");
+
+    const states = [
+        "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+    ]
+
+    for (let i = 0; i < stateSelectEl.length; i++) {
+        const currentSelectEl = stateSelectEl[i];
+        for (let j = 0; j < states.length; j++) {
+            const currentState = states[j];
+            const option = document.createElement("option");
+            option.setAttribute("value", currentState);
+            option.textContent = currentState;
+            currentSelectEl.append(option);
+        };
+    }
+    M.FormSelect.init(stateSelectEl);
+};
 
 // The insertInputRow function creates a new input row in the form.
 const insertInputRow = function (event) {
@@ -157,25 +152,29 @@ const insertInputRow = function (event) {
     newInputRow.classList = "row";
     newInputRow.id = "input-row";
     newInputRow.innerHTML =
-        `    <p>Stop ${newStopNum}</p>
-    <div class="input-field col s4">
-        <label class="active" for="city-${newStopNum}">
-            City:
-        </label>
-        <input type="text" name="city-${newStopNum}" placeholder="e.g. Missoula">
-    </div>
-    <div class="input-field col s4">
-        <label class="active" for="state-${newStopNum}">
-            State:
-        </label>
-        <input type="text" name="state-${newStopNum}" placeholder="e.g. Montana">
-    </div>
-    <div class="input-field col s4">
-        <label class="active" for="state-${newStopNum}">
-            Length of Stay (day):
-        </label>
-        <input type="number" min="0" name="days-${newStopNum}" placeholder="How many days">
-    </div>`
+        `
+<p>Stop ${newStopNum}</p>
+<div class="input-field col s4">
+    <label class="active" for="city-${newStopNum}">
+        City:
+    </label>
+    <input class="autocomplete" type="text" name="city-${newStopNum}" placeholder="Enter city">
+</div>
+<div class="input-field col s4">
+    <label class="active" for="state-${newStopNum}">
+        State:
+    </label>
+    <select>
+        <option value="" disabled selected>Choose state</option>
+    </select>
+</div>
+<div class="input-field col s4">
+    <label class="active" for="state-${newStopNum}">
+        Length of Stay (day):
+    </label>
+    <input type="number" min="0" name="days-${newStopNum}" placeholder="How many days">
+</div>
+`
     formEl.insertBefore(newInputRow, buttonContainer);
 }
 
@@ -185,7 +184,8 @@ const resetForm = function (event) {
 
     formEl.innerHTML = "";
     formEl.innerHTML =
-        `    <div class="row" id="input-row">
+        `
+<div class="row" id="input-row">
     <p>Depareture Date</p>
     <div class="input-field col s12">
         <input id="departure-date" type="date" name="departure-date" class="validate">
@@ -198,13 +198,15 @@ const resetForm = function (event) {
         <label class="active" for="city-0">
             City:
         </label>
-        <input type="text" name="city-0" placeholder="e.g. Seattle">
+        <input class="autocomplete" type="text" name="city-0" placeholder="Enter city">
     </div>
     <div class="input-field col s4">
         <label class="active" for="state-0">
             State:
         </label>
-        <input type="text" name="state-0" placeholder="e.g. Washington">
+        <select>
+            <option value="" disabled selected>Choose state</option>
+        </select>
     </div>
     <div class="input-field col s4">
         <label class="active" for="day-0">
@@ -220,13 +222,15 @@ const resetForm = function (event) {
         <label class="active" for="city-1">
             City:
         </label>
-        <input type="text" name="city-1" placeholder="e.g. Missoula">
+        <input class="autocomplete" type="text" name="city-1" placeholder="Enter city">
     </div>
     <div class="input-field col s4">
         <label class="active" for="state-1">
             State:
         </label>
-        <input type="text" name="state-1" placeholder="e.g. Montana">
+        <select>
+            <option value="" disabled selected>Choose state</option>
+        </select>
     </div>
     <div class="input-field col s4">
         <label class="active" for="state-1">
@@ -254,6 +258,31 @@ for (i = 0; i < testingEl.childElementCount;i++) {
 }
 
 // The insertInputRow function is called when the add stop button is clicked.
-addStopBtn.addEventListener("click", insertInputRow);
+addStopBtn.addEventListener("click", function (event) {
+    insertInputRow(event);
+    handleStateOptions();
+});
 // The resetForm function is called when the reset form button is clicked.
-resetBtn.addEventListener("click", resetForm);
+resetBtn.addEventListener("click", function (event) {
+    resetForm(event);
+    handleStateOptions();
+});
+
+handleStateOptions();
+
+// Save input values.
+const handleSubmit = function (event) {
+    event.preventDefault();
+
+    const inputRowEl = document.querySelectorAll("#input-row");
+    for (let i = 1; i < inputRowEl.length; i++) {
+        const currentInputRow = inputRowEl[i];
+        const city = currentInputRow.getElementsByTagName("input")[0].value;
+        const state = currentInputRow.getElementsByTagName("input")[1].value;
+        const day = currentInputRow.getElementsByTagName("input")[2].value;
+
+        console.log(city, state, day);
+    };
+}
+
+saveBtn.addEventListener("click", handleSubmit);

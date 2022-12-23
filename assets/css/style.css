@@ -66,6 +66,12 @@ input {
     color-scheme: dark;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    opacity: 1;
+    cursor: pointer;
+}
+
 .button {
     width: 200px;
     font-weight: bold;
@@ -82,6 +88,10 @@ input {
 .button:hover {
     transform: translateY(-7px);
     border: 1px solid var(--light);
+}
+
+.button:focus {
+    background-color: transparent;
 }
 
 /* INDEX PAGE */
@@ -192,11 +202,6 @@ main {
 form {
     width: 100%;
     height: min-content;
-}
-
-::placeholder {
-    color: medium;
-    opacity: 0.6;
 }
 
 form p {

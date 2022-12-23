@@ -28,7 +28,7 @@
         <section class="form-container">
             <form>
                 <div class="row" id="input-row">
-                    <p>Depareture Date</p>
+                    <p>Departure Date</p>
                     <div class="input-field col s12">
                         <input id="departure-date" type="date" name="departure-date" class="validate">
                     </div>
@@ -40,13 +40,15 @@
                         <label class="active" for="city-0">
                             City:
                         </label>
-                        <input type="text" name="city-0" placeholder="e.g. Seattle">
+                        <input class="autocomplete" type="text" name="city-0" placeholder="Enter city">
                     </div>
                     <div class="input-field col s4">
                         <label class="active" for="state-0">
                             State:
                         </label>
-                        <input type="text" name="state-0" placeholder="e.g. Washington">
+                        <select>
+                            <option value="" disabled selected>Choose state</option>
+                        </select>
                     </div>
                     <div class="input-field col s4">
                         <label class="active" for="day-0">
@@ -61,13 +63,15 @@
                         <label for="stop-1">
                             Stop 1:
                         </label>
-                        <input type="text" name="stop-1" placeholder="City">
+                        <input class="autocomplete" type="text" name="city-1" placeholder="Enter city">
                     </div>
                     <div class="input-field col s6">
                         <label for="starting-point">
                             Length of Stay (day):
                         </label>
-                        <input type="number" name="days-1" placeholder="How many days">
+                        <select>
+                            <option value="" disabled selected>Choose state</option>
+                        </select>
                     </div>
                 </div>
             </div>
