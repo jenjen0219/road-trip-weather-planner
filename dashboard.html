@@ -5,7 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Materialize CSS library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Local CSS -->
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Road Trip Weather Planner</title>
@@ -13,56 +19,62 @@
 
 <body>
     <header>
-        <h3>Road Trip Weather Planner</h3>
+        <a href="index.html">
+            <h3>Road Trip Weather Planner</h3>
+        </a>
     </header>
 
     <main>
         <section class="form-container">
             <form>
                 <div class="row" id="input-row">
-                    <label for="departure-date">
-                        Depareture Date:
-                    </label>
-                    <input id="departure-date" type="date" name="departure-date" class="validate">
-                </div>
-                </div>
-
-                <div id="testContainer">
-                    <div class="row" id="input-row">
-                        <div class="input-field col s6">
-                            <label for="starting-point">
-                                Starting Point:
-                            </label>
-                            <input id='cityName0'type="text" name="starting-point" placeholder="City">
-                        </div>
-                        <div class="input-field col s6">
-                            <label for="starting-point">
-                                Length of Stay (day):
-                            </label>
-                            <input  id="los0" type="number" name="days-0" placeholder="How many days">
-                        </div>
+                    <p>Depareture Date</p>
+                    <div class="input-field col s12">
+                        <input id="departure-date" type="date" name="departure-date" class="validate">
                     </div>
+                </div>
 
-                    <div class="row" id="input-row">
-                        <div class="input-field col s6">
-                            <label for="stop-1">
-                                Stop 1:
-                            </label>
-                            <input type="text" name="stop-1" placeholder="City">
-                        </div>
-                        <div class="input-field col s6">
-                            <label for="starting-point">
-                                Length of Stay (day):
-                            </label>
-                            <input type="number" name="days-1" placeholder="How many days">
-                        </div>
+                <div class="row" id="input-row">
+                    <p>Starting Point</p>
+                    <div class="input-field col s4">
+                        <label class="active" for="city-0">
+                            City:
+                        </label>
+                        <input type="text" name="city-0" placeholder="e.g. Seattle">
+                    </div>
+                    <div class="input-field col s4">
+                        <label class="active" for="state-0">
+                            State:
+                        </label>
+                        <input type="text" name="state-0" placeholder="e.g. Washington">
+                    </div>
+                    <div class="input-field col s4">
+                        <label class="active" for="day-0">
+                            Length of Stay (day):
+                        </label>
+                        <input type="number" min="0" name="day-0" placeholder="How many days">
+                    </div>
+                </div>
+
+                <div class="row" id="input-row">
+                    <div class="input-field col s6">
+                        <label for="stop-1">
+                            Stop 1:
+                        </label>
+                        <input type="text" name="stop-1" placeholder="City">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="starting-point">
+                            Length of Stay (day):
+                        </label>
+                        <input type="number" name="days-1" placeholder="How many days">
                     </div>
                 </div>
 
                 <div class="row" id="btn-container">
-                    <button id="add-stop-btn">Add Stop</button>
-                    <button id="reset-btn">Reset Form</button>
-                    <button id="save-btn" type="submit">Save</button>
+                    <button class="button" id="add-stop-btn">+ Add Stop</button>
+                    <button class="button" id="reset-btn">Reset Form</button>
+                    <button class="button" id="save-btn" type="submit">Save</button>
                 </div>
             </form>
         </section>
@@ -74,7 +86,7 @@
             </div>
 
 
-            <button id="email-btn">
+            <button class="button" id="email-btn">
                 <a href="mailto:">
                     Email this
                 </a>
