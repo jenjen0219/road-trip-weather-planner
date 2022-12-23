@@ -245,7 +245,7 @@ const resetForm = function (event) {
     <button class="button" id="reset-btn">Reset Form</button>
     <button class="button" id="save-btn" type="submit">Save</button>
 </div>`
-}
+};
 
 
 // for (i = 0; i < testingEl.childElementCount;i++) {
@@ -253,7 +253,7 @@ const resetForm = function (event) {
 //         var los = document.getElementById("los"[i]);
 
 
-        
+
 
 // }
 
