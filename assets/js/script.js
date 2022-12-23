@@ -244,7 +244,7 @@ const resetForm = function (event) {
     <button class="button" id="save-btn" type="submit">Save</button>
 </div>
 `
-}
+};
 
 // The insertInputRow function is called when the add stop button is clicked.
 addStopBtn.addEventListener("click", function (event) {
