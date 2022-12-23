@@ -1,105 +1,107 @@
-// VARIABLES FOR GEOLOCATION API
-//       - city name
-//       VARIABLE FOR WEATHER API
-//       - the starting date variable
-//       - the duration of days variable
-//       - the coordinates of the city
-//       VARIABLE FOR MAPPING API
-//       - geolocation api stored variable for coordinates for two locations
+// // VARIABLES FOR GEOLOCATION API
+// //       - city name
+// //       VARIABLE FOR WEATHER API
+// //       - the starting date variable
+// //       - the duration of days variable
+// //       - the coordinates of the city
+// //       VARIABLE FOR MAPPING API
+// //       - geolocation api stored variable for coordinates for two locations
 
 
-//this function is going to verify that the user entered the city name correctly and also fetch an API response of which we will grab the lat and lon coordinates
-function cityCoordinates () {
-    //here we are declaring a variable that is where the user will enter the city name
-    var cityName = 'seattle';
-    var state = 'WA';
-    var lonCoord = 0;
-    var latCoord = 0;
-    var APIKey = '4ef3772979be6dce53798914fca77969';
+// //this function is going to verify that the user entered the city name correctly and also fetch an API response of which we will grab the lat and lon coordinates
+// function cityCoordinates () {
+//     //here we are declaring a variable that is where the user will enter the city name
+//     var cityName = 'seattle';
+//     var state = 'WA';
+//     var lonCoord = 0;
+//     var latCoord = 0;
+//     var APIKey = '4ef3772979be6dce53798914fca77969';
 
-    //this is to ensure that the user
-    // if (cityName == "" || isNaN(cityName)) {
+//     //this is to ensure that the user
+//     // if (cityName == "" || isNaN(cityName)) {
 
-    // }
+//     // }
 
-    var queryURLCoordinates = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityName + ',' + state + ',US&appid=' + APIKey;
+//     var queryURLCoordinates = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityName + ',' + state + ',US&appid=' + APIKey;
 
-    fetch(queryURLCoordinates)
-        .then(response => response.json())
+//     fetch(queryURLCoordinates)
+//         .then(response => response.json())
 
-        .then(data => {
-            lonCoord = data[0].lon;
-            latCoord = data[0].lat;
-            console.log(lonCoord);
-            console.log(latCoord);
+//         .then(data => {
+//             lonCoord = data[0].lon;
+//             latCoord = data[0].lat;
+//             console.log(lonCoord);
+//             console.log(latCoord);
 
-        })
+//         })
 
-        .catch(function (error) {
-            console.error(error);
-        });
-
-
-};
-var test = document.getElementById("save-btn");
-
-//in this function we are going to fetch the api response that we will use to give a weather forecast for each city
-function cityWeather (event) {
-
-    event.preventDefault();
-
-    var departDate = document.getElementById("departure-date").value;
-
-    //this is rearranging our date to the format accepetted by the weather api
-
-    //i think we might have to do some work to translate the date variable into either UNIX time (that is, seconds since midnight GMT on 1 Jan 1970) or a string formatted as follows: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS][timezone].
-    // var lengthOfStay = document.getElementById("");
-    var date = departDate + 'T12:00:00';
-
-    var APIKey = '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58';
-
-    var lonCoord = -122.335167;
-    var latCoord = 47.608013;
-    var tempMin;
-    var tempMax;
-
-    var humidity;
-    var windSpeed;
+//         .catch(function (error) {
+//             console.error(error);
+//         });
 
 
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58',
-            'X-RapidAPI-Host': 'dark-sky.p.rapidapi.com'
-        }
-    };
+// };
+// var test = document.getElementById("save-btn");
+
+// //in this function we are going to fetch the api response that we will use to give a weather forecast for each city
+// function cityWeather (event) {
+
+//     event.preventDefault();
+
+//     var departDate = document.getElementById("departure-date").value;
+
+//     //this is rearranging our date to the format accepetted by the weather api
+
+//     //i think we might have to do some work to translate the date variable into either UNIX time (that is, seconds since midnight GMT on 1 Jan 1970) or a string formatted as follows: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS][timezone].
+//     // var lengthOfStay = document.getElementById("");
+//     var date = departDate + 'T12:00:00';
+
+//     var APIKey = '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58';
+
+//     var lonCoord = -122.335167;
+//     var latCoord = 47.608013;
+//     var tempMin;
+//     var tempMax;
+
+//     var humidity;
+//     var windSpeed;
 
 
-    fetch('https://dark-sky.p.rapidapi.com/' + latCoord + ',' + lonCoord + ',' + date + '?units=uk2', options)
-        .then(response => response.json())
-        .then(data => {
-            tempMin = data.daily.data[0].temperatureMin;
-            tempMax = data.daily.data[0].temperatureMax;
-            humidity = data.daily.data[0].humidity;
-            windSpeed = data.daily.data[0].windSpeed;
-
-            console.log(tempMin, tempMax, humidity, windSpeed);
-
-        })
-        .catch(err => console.error(err));
+//     const options = {
+//         method: 'GET',
+//         headers: {
+//             'X-RapidAPI-Key': '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58',
+//             'X-RapidAPI-Host': 'dark-sky.p.rapidapi.com'
+//         }
+//     };
 
 
+//     fetch('https://dark-sky.p.rapidapi.com/' + latCoord + ',' + lonCoord + ',' + date + '?units=uk2', options)
+//         .then(response => response.json())
+//         .then(data => {
+//             tempMin = data.daily.data[0].temperatureMin;
+//             tempMax = data.daily.data[0].temperatureMax;
+//             humidity = data.daily.data[0].humidity;
+//             windSpeed = data.daily.data[0].windSpeed;
 
-}
+//             console.log(tempMin, tempMax, humidity, windSpeed);
 
-test.addEventListener('click', cityWeather);
+//         })
+//         .catch(err => console.error(err));
+
+
+
+// }
+
+// test.addEventListener('click', cityWeather);
+
 
 // Save reference to important DOM elements.
 const formEl = document.querySelector("form");
 const buttonContainer = document.querySelector("#btn-container");
 const addStopBtn = document.querySelector("#add-stop-btn");
 const resetBtn = document.querySelector("#reset-btn");
+const saveBtn = document.querySelector("#save-btn");
 
 // Populate the list of autocomplete options in the city input box.
 document.addEventListener('DOMContentLoaded', function () {
@@ -258,3 +260,20 @@ resetBtn.addEventListener("click", function (event) {
 });
 
 handleStateOptions();
+
+// Save input values.
+const handleSubmit = function (event) {
+    event.preventDefault();
+
+    const inputRowEl = document.querySelectorAll("#input-row");
+    for (let i = 1; i < inputRowEl.length; i++) {
+        const currentInputRow = inputRowEl[i];
+        const city = currentInputRow.getElementsByTagName("input")[0].value;
+        const state = currentInputRow.getElementsByTagName("input")[1].value;
+        const day = currentInputRow.getElementsByTagName("input")[2].value;
+
+        console.log(city, state, day);
+    };
+}
+
+saveBtn.addEventListener("click", handleSubmit);
