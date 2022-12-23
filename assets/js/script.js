@@ -248,15 +248,6 @@ const resetForm = function (event) {
 };
 
 
-// for (i = 0; i < testingEl.childElementCount;i++) {
-//         var cityName = document.getElementById("cityName"[i]);
-//         var los = document.getElementById("los"[i]);
-
-
-
-
-// }
-
 // The insertInputRow function is called when the add stop button is clicked.
 addStopBtn.addEventListener("click", function (event) {
     insertInputRow(event);
@@ -274,14 +265,18 @@ handleStateOptions();
 const handleSubmit = function (event) {
     event.preventDefault();
 
-    const inputRowEl = document.querySelectorAll("#input-row");
-    for (let i = 1; i < inputRowEl.length; i++) {
-        const currentInputRow = inputRowEl[i];
-        const city = currentInputRow.getElementsByTagName("input")[0].value;
-        const state = currentInputRow.getElementsByTagName("input")[1].value;
-        const day = currentInputRow.getElementsByTagName("input")[2].value;
+    const inputRowEl = document.getElementById("formEntryContainer");
+    const departureDate = document.getElementById("departure-date").value;
 
-        console.log(city, state, day);
+    // i forgot to mention we will also need to grab the date variable and i noticed that when i did it caused some issues 
+    //s
+    for (let i = 0; i < inputRowEl.childElementCount - 1; i++) {
+        // const currentInputRow = inputRowEl[i];
+        const city = document.getElementById("cityName" + [i]).value;
+        const state = document.getElementById("state" + [i]);
+        // const departDate = currentInputRow.getElementsByTagName("input")[3].value;
+
+        console.log(city, state);
     };
 }
 
