@@ -1,60 +1,5 @@
 
 
-
-
-//in this function we are going to fetch the api response that we will use to give a weather forecast for each city
-function cityWeather (event) {
-
-    event.preventDefault();
-
-    var departDate = document.getElementById("departure-date").value;
-
-    //this is rearranging our date to the format accepetted by the weather api
-
-    //i think we might have to do some work to translate the date variable into either UNIX time (that is, seconds since midnight GMT on 1 Jan 1970) or a string formatted as follows: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS][timezone].
-    // var lengthOfStay = document.getElementById("");
-    var date = departDate + 'T12:00:00';
-
-    var APIKey = '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58';
-
-    var lonCoord = -122.335167;
-    var latCoord = 47.608013;
-    var tempMin;
-    var tempMax;
-
-    var humidity;
-    var windSpeed;
-
-
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58',
-            'X-RapidAPI-Host': 'dark-sky.p.rapidapi.com'
-        }
-    };
-
-
-    fetch('https://dark-sky.p.rapidapi.com/' + latCoord + ',' + lonCoord + ',' + date + '?units=uk2', options)
-        .then(response => response.json())
-        .then(data => {
-            tempMin = data.daily.data[0].temperatureMin;
-            tempMax = data.daily.data[0].temperatureMax;
-            humidity = data.daily.data[0].humidity;
-            windSpeed = data.daily.data[0].windSpeed;
-
-            console.log(tempMin, tempMax, humidity, windSpeed);
-
-        })
-        .catch(err => console.error(err));
-
-
-
-}
-
-// test.addEventListener('click', cityWeather);
-
-
 // Save reference to important DOM elements.
 const formEl = document.querySelector("form");
 const buttonContainer = document.querySelector("#btn-container");
@@ -219,65 +164,37 @@ resetBtn.addEventListener("click", function (event) {
 });
 
 handleStateOptions();
+// ----------------------------------------------------------------------------------------------------------------------------
 
-// Save input values.
-// const handleSubmit = function (event) {
-//     event.preventDefault();
-
-//     const inputRowEl = document.getElementById("formEntryContainer");
-//     const departureDate = document.getElementById("departure-date").value;
-
-//     // i forgot to mention we will also need to grab the date variable and i noticed that when i did it caused some issues 
-//     //s
-//     for (let i = 0; i < inputRowEl.childElementCount - 1; i++) {
-//         // const currentInputRow = inputRowEl[i];
-//         const city = document.getElementById("cityName" + [i]).value;
-//         const state = document.getElementById("state" + [i]);
-//         // const departDate = currentInputRow.getElementsByTagName("input")[3].value;
-
-//         console.log(city, state);
-//     };
-// }
 var origins = [];
+var lonCoord = 0;
+var latCoord = 0;
+var coordinates;
+
 
 const handleSubmit = function (event) {
     event.preventDefault();
 
-    const inputRowEl = document.querySelectorAll("#input-row");
-    const departureDate = document.getElementById("departure-date").value;
+    //this variable is housing the input for the starting date entry
+    // const departDate = document.getElementById("departure-date").value;
+    // var date = departDate + 'T12:00:00';
 
+    //the weather api used requires that we grab the date and also input a time
+    // var date = departDate + 'T12:00:00';
+
+    //this variable is grabbing each id named input-row
+    const inputRowEl = document.querySelectorAll("#input-row");
+
+    //for each row we need to grab the city, state, and lenght of stay(length of stay is meant for mapping) in order to obtain each cities coordinates in the coordinates api and for fetching the weather api response
     for (let i = 1; i < inputRowEl.length; i++) {
         const currentInputRow = inputRowEl[i];
+
         const city = currentInputRow.getElementsByTagName("input")[0].value;
         const state = currentInputRow.getElementsByTagName("input")[1].value;
         const day = currentInputRow.getElementsByTagName("input")[2].value;
 
-        // everytime we run this we need to coordinates to go back to zero 
-        var lonCoord = 0;
-        var latCoord = 0;
-
-        var queryURLCoordinates = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + ',' + state + ',US&appid=4ef3772979be6dce53798914fca77969';
-
-        fetch(queryURLCoordinates)
-            .then(response => response.json())
-
-            .then(data => {
-                lonCoord = data[0].lon;
-                latCoord = data[0].lat;
-                var coordinates = latCoord + ',' + lonCoord;
-                origins.push(coordinates);
-                console.log(origins);
-
-            })
-
-            .catch(function (error) {
-                console.error(error);
-            });
-
-
-
-
-
+        
+        cityCoordinates(city, state);
 
 
 
@@ -285,3 +202,73 @@ const handleSubmit = function (event) {
 }
 
 saveBtn.addEventListener("click", handleSubmit);
+
+function cityCoordinates(city, state) {
+    var queryURLCoordinates = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + ',' + state + ',US&appid=4ef3772979be6dce53798914fca77969';
+
+    fetch(queryURLCoordinates)
+        .then(response => response.json())
+
+        .then(data => {
+
+            lonCoord = data[0].lon;
+            latCoord = data[0].lat;
+            coordinates = latCoord + ',' + lonCoord;
+            cityWeather(coordinates);
+
+            // origins.push(coordinates);
+            // console.log(origins);
+
+        })
+
+        .catch(function (error) {
+            console.error(error);
+        });
+
+}
+
+
+//in this function we are going to fetch the api response that we will use to give a weather forecast for each city
+function cityWeather(coordinates) {
+
+    const departDate = document.getElementById("departure-date").value;
+    var date = departDate + 'T12:00:00';
+
+    var tempMin;
+    var tempMax;
+    var humidity;
+    var windSpeed;
+
+
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58',
+            'X-RapidAPI-Host': 'dark-sky.p.rapidapi.com'
+        }
+    };
+
+
+    fetch('https://dark-sky.p.rapidapi.com/' + coordinates + ',' + date + '?units=uk2', options)
+        .then(response => response.json())
+        .then(data => {
+            tempMin = data.daily.data[0].temperatureMin;
+            tempMax = data.daily.data[0].temperatureMax;
+            humidity = data.daily.data[0].humidity;
+            windSpeed = data.daily.data[0].windSpeed;
+
+            console.log(tempMin, tempMax, humidity * 100 + '%', windSpeed);
+
+        })
+        .catch(err => console.error(err));
+
+
+
+}
+// var cityInfo = {
+//     city1: {
+//         cityName: 
+//     }
+
+
+// }
