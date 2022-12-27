@@ -166,10 +166,10 @@ resetBtn.addEventListener("click", function (event) {
 handleStateOptions();
 // ----------------------------------------------------------------------------------------------------------------------------
 
-var origins = [];
+var origins = '';
 var lonCoord = 0;
 var latCoord = 0;
-var coordinates;
+var coordinate;
 
 
 const handleSubmit = function (event) {
@@ -193,8 +193,16 @@ const handleSubmit = function (event) {
         const state = currentInputRow.getElementsByTagName("input")[1].value;
         const day = currentInputRow.getElementsByTagName("input")[2].value;
 
-        
+
         cityCoordinates(city, state);
+
+        if (day > 0) {
+            for (i = 0; i < day; i++) {
+                date.setDate(date.getDate() + 1);
+                console.log(date);
+            }
+        }
+
 
 
 
@@ -213,11 +221,15 @@ function cityCoordinates(city, state) {
 
             lonCoord = data[0].lon;
             latCoord = data[0].lat;
-            coordinates = latCoord + ',' + lonCoord;
-            cityWeather(coordinates);
+            coordinate = latCoord + ',' + lonCoord;
+            cityWeather(coordinate);
 
-            // origins.push(coordinates);
-            // console.log(origins);
+
+
+
+            origins += coordinate + ";";
+            console.log(origins);
+            cityRoadTrip(coordinate);
 
         })
 
@@ -229,7 +241,7 @@ function cityCoordinates(city, state) {
 
 
 //in this function we are going to fetch the api response that we will use to give a weather forecast for each city
-function cityWeather(coordinates) {
+function cityWeather(coordinates, date) {
 
     const departDate = document.getElementById("departure-date").value;
     var date = departDate + 'T12:00:00';
@@ -265,10 +277,26 @@ function cityWeather(coordinates) {
 
 
 }
-// var cityInfo = {
-//     city1: {
-//         cityName: 
-//     }
+
+function cityRoadTrip(coordinates) {
+    var distance;
+    var duration;
 
 
-// }
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58',
+            'X-RapidAPI-Host': 'trueway-matrix.p.rapidapi.com'
+        }
+    };
+
+    fetch('https://trueway-matrix.p.rapidapi.com/CalculateDrivingMatrix?origins=' + coordinates, options)
+        .then(response => response.json())
+        .then(data => {
+            distance = data.distances[0];
+            console.log(distance);
+        })
+
+        .catch(err => console.error(err));
+}
