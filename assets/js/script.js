@@ -170,18 +170,30 @@ var origins = '';
 var lonCoord = 0;
 var latCoord = 0;
 var coordinate;
+var date;
+var departDate;
 
 
 const handleSubmit = function (event) {
     event.preventDefault();
 
-    //this variable is housing the input for the starting date entry
-    // const departDate = document.getElementById("departure-date").value;
-    // var date = departDate + 'T12:00:00';
+    //the following retrieves the user-selected date which is a STRING formatted as 2022-12-29
+    var departDate = document.getElementById("departure-date").value;
 
-    //the weather api used requires that we grab the date and also input a time
-    // var date = departDate + 'T12:00:00';
+    //this converts our date into an actual DATE formatted as Wed Dec 28 2022 16:00:00 GMT-0800 (Pacific Standard Time)
+    var newDate = new Date(departDate);
+    //this is necessary for when we wish to add a single day to our date variable
 
+    //in this console.log we are then formatting our date to 2022-12-29T00:00:00.000Z which is more similar to the format required by our API
+    console.log(newDate.toISOString());
+
+    //we will now split our closley formatted date by the . in order to retrieve the portion accepted by the API
+    var split = newDate.toISOString().split(".");
+
+    //considering that when we split, our text is made into a type of array we can simply just pick the first item, which is anything in front of the period
+    console.log(split[0]);
+
+    // var newDatee = new Date(date);
     //this variable is grabbing each id named input-row
     const inputRowEl = document.querySelectorAll("#input-row");
 
@@ -193,21 +205,30 @@ const handleSubmit = function (event) {
         const state = currentInputRow.getElementsByTagName("input")[1].value;
         const day = currentInputRow.getElementsByTagName("input")[2].value;
 
-
+        //this fucntion is calling our geocoding api and getting the coordinates for this specific city 
         cityCoordinates(city, state);
 
+        //now that we have the necessary conversion of city name to coordinates then we can use that data to five us the weather api response
+        // if our user plans to send several days in one location then we will need to fire off multiple weather api responses
         if (day > 0) {
             for (i = 0; i < day; i++) {
-                date.setDate(date.getDate() + 1);
-                console.log(date);
+
+
+                // add a day
+                newDate.setDate(newDate.getDate() + 1);
+                // return newDate;
+
+                cityWeather(coordinate, newDate);
+
             }
         }
-
-
-
-
     };
+
+
 }
+
+
+
 
 saveBtn.addEventListener("click", handleSubmit);
 
@@ -222,14 +243,16 @@ function cityCoordinates(city, state) {
             lonCoord = data[0].lon;
             latCoord = data[0].lat;
             coordinate = latCoord + ',' + lonCoord;
-            cityWeather(coordinate);
-
+            // cityWeather(coordinate, date);
 
 
 
             origins += coordinate + ";";
             console.log(origins);
-            cityRoadTrip(coordinate);
+            // cityRoadTrip(coordinate);
+            return coordinate;
+
+
 
         })
 
@@ -243,14 +266,10 @@ function cityCoordinates(city, state) {
 //in this function we are going to fetch the api response that we will use to give a weather forecast for each city
 function cityWeather(coordinates, date) {
 
-    const departDate = document.getElementById("departure-date").value;
-    var date = departDate + 'T12:00:00';
-
     var tempMin;
     var tempMax;
     var humidity;
     var windSpeed;
-
 
     const options = {
         method: 'GET',
@@ -260,7 +279,6 @@ function cityWeather(coordinates, date) {
         }
     };
 
-
     fetch('https://dark-sky.p.rapidapi.com/' + coordinates + ',' + date + '?units=uk2', options)
         .then(response => response.json())
         .then(data => {
@@ -269,12 +287,10 @@ function cityWeather(coordinates, date) {
             humidity = data.daily.data[0].humidity;
             windSpeed = data.daily.data[0].windSpeed;
 
-            console.log(tempMin, tempMax, humidity * 100 + '%', windSpeed);
+            console.log(tempMin, tempMax, humidity * 100 + '%', windSpeed + 'mph');
 
         })
         .catch(err => console.error(err));
-
-
 
 }
 
