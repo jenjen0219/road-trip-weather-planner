@@ -249,6 +249,11 @@ form p {
     font-size: 1.3rem;
 }
 
+#clear-btn:hover {
+    color: var(--dark);
+    background-color: var(--red);
+}
+
 footer {
     color: var(--light);
     width: 100%;

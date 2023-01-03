@@ -5,6 +5,7 @@ const addStopBtn = document.querySelector("#add-stop-btn");
 const resetBtn = document.querySelector("#reset-btn");
 const saveBtn = document.querySelector("#save-btn");
 const weatherForecastContainer = document.querySelector(".weather-forecast");
+const clearBtn = document.querySelector("#clear-btn");
 
 // Populate the list of autocomplete options for city input.
 const getCityAutocomplete = function () {
@@ -301,6 +302,13 @@ const handleSubmit = async function (event) {
     };
 };
 
+// The clearWeatherData function clears the weather forecast container.
+const clearWeatherData = function (event) {
+    event.preventDefault();
+
+    weatherForecastContainer.innerHTML = "";
+}
+
 // The insertInputRow function is called when the add stop button is clicked.
 addStopBtn.addEventListener("click", function (event) {
     insertInputRow(event);
@@ -315,6 +323,9 @@ resetBtn.addEventListener("click", function (event) {
 
 // The handleSubmit function is called when the save button is clicked.
 saveBtn.addEventListener("click", handleSubmit);
+
+// The clearWeatherData function is called when the clear button is clicked.
+clearBtn.addEventListener("click", clearWeatherData);
 
 // Run autocomplete functionality for city input on page load.
 document.addEventListener('DOMContentLoaded', getCityAutocomplete);
