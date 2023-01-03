@@ -153,15 +153,9 @@ const resetForm = function (event) {
 
 // The getCityWeather function requests weather information for each city from the third api.
 const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum, coordinate) {
-    const dateObj = new Date(dateInputVal);
-    const formattedDate = dateObj.toLocaleDateString("en-US", {
-        weekday: "short",
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-    });
-
     const numOfDays = parseInt(dayInputVal);
+    const dateObj = new Date(dateInputVal);
+    const startDateObj = new Date(dateObj.setDate(dateObj.getDate() + parseInt(daySum)));
 
     const options = {
         method: 'GET',
@@ -172,7 +166,15 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
     };
 
     if (numOfDays === 0) {
-        const dateForURL = dateObj.toISOString().split(".")[0];
+        const currentDateObj = new Date(startDateObj.setDate(startDateObj.getDate() + 1));
+        const formattedDate = currentDateObj.toLocaleDateString("en-US", {
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+        });
+
+        const dateForURL = currentDateObj.toISOString().split(".")[0];
         const requestURL = 'https://dark-sky.p.rapidapi.com/' + coordinate + ',' + dateForURL + '?units=uk2';
 
         const response = await fetch(requestURL, options);
@@ -187,6 +189,9 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
         const tempMax = Math.round((data.daily.data[0].temperatureMax * 9 / 5) + 32);
         const humidity = data.daily.data[0].humidity * 100;
         const windSpeed = data.daily.data[0].windSpeed;
+
+        console.log(dateObj);
+        console.log(formattedDate);
 
         weatherForecastContainer.innerHTML +=
             `
@@ -209,8 +214,6 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
             <h6>${cityInputVal}, ${stateInputVal}</h6>
         </div>
         `
-
-        const startDateObj = new Date(dateObj.setDate(dateObj.getDate() + parseInt(daySum)));
 
         for (let i = 0; i < numOfDays; i++) {
             const currentDateObj = new Date(startDateObj.setDate(startDateObj.getDate() + 1));
