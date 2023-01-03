@@ -213,15 +213,19 @@ const handleSubmit = function (event) {
         if (day > 0) {
             for (i = 0; i < day; i++) {
 
+
+                // cityCoordinates(city, state);
+                // console.log(coordinate);
+
                 // add a day to our date variable
                 newDate.setDate(newDate.getDate() + 1);
 
                 //splitting our iso string formatted date by the . to retrieve everything before it (2022-12-29T00:00:00.000Z)
                 split = newDate.toISOString().split(".");
-
                 console.log(split[0]);
+                // return split;
 
-                // cityWeather(coordinate, split[0]);
+                cityWeather(coordinate, split[0]);
 
             }
         }
@@ -245,7 +249,7 @@ function cityCoordinates(city, state) {
             lonCoord = data[0].lon;
             latCoord = data[0].lat;
             coordinate = latCoord + ',' + lonCoord;
-            // cityWeather(coordinate, date);
+            // cityWeather(coordinate, split[0]);
 
 
 
