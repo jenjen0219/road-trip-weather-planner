@@ -6,7 +6,7 @@ const resetBtn = document.querySelector("#reset-btn");
 const saveBtn = document.querySelector("#save-btn");
 const weatherForecastContainer = document.querySelector(".weather-forecast");
 
-// Populate the list of autocomplete options in the city input box.
+// Populate the list of autocomplete options for city input.
 const getCityAutocomplete = function () {
     const options = {
         data: {
@@ -19,10 +19,7 @@ const getCityAutocomplete = function () {
     M.Autocomplete.init(cityInputEl, options);
 }
 
-// Run autocomplete on page load.
-document.addEventListener('DOMContentLoaded', getCityAutocomplete);
-
-// Create and render the select options for state.
+// Create and render the select options for state input.
 const handleStateOptions = function () {
     const stateSelectEl = document.querySelectorAll("select");
 
@@ -154,21 +151,6 @@ const resetForm = function (event) {
 `
 };
 
-// The insertInputRow function is called when the add stop button is clicked.
-addStopBtn.addEventListener("click", function (event) {
-    insertInputRow(event);
-    handleStateOptions();
-});
-// The resetForm function is called when the reset form button is clicked.
-resetBtn.addEventListener("click", function (event) {
-    resetForm(event);
-    handleStateOptions();
-});
-
-handleStateOptions();
-
-// ----------------------------------------------------------------------------------------------------------------------------
-
 // The getCityWeather function requests weather information for each city from the third api.
 const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum, coordinate) {
     const dateObj = new Date(dateInputVal);
@@ -289,12 +271,6 @@ const getCityCoordinates = async function (dateInputVal, cityInputVal, stateInpu
     const lonCoord = data[0].lon;
     const coordinate = latCoord + ',' + lonCoord;
     await getCityWeather(dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum, coordinate);
-
-    // origins += coordinate + ";";
-    // console.log(origins);
-    // // cityRoadTrip(coordinate);
-    // console.log(coordinate);
-    // return coordinate;
 };
 
 // The handleSubmit function takes input values and triggers functions to fetch city coordinates and weather forecast data.
@@ -319,49 +295,26 @@ const handleSubmit = async function (event) {
         const dayInputVal = currentInputRow.getElementsByTagName("input")[2].value;
 
         await getCityCoordinates(dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum);
-
-        // //now that we have the necessary conversion of city name to coordinates then we can use that data to five us the weather api response
-        // // if our user plans to send several days in one location then we will need to fire off multiple weather api responses
-        // if (day > 0) {
-        //     for (i = 0; i < day; i++) {
-
-        //         // add a day to our date variable
-        //         newDate.setDate(newDate.getDate() + 1);
-
-        //         //splitting our iso string formatted date by the . to retrieve everything before it (2022-12-29T00:00:00.000Z)
-        //         split = newDate.toISOString().split(".");
-
-        //         console.log(split[0]);
-
-        //         // getCityWeather(coordinate, split[0]);
-
-        //     }
-        // }
     };
 };
 
-// function cityRoadTrip (coordinates) {
-//     let distance;
-//     let duration;
+// The insertInputRow function is called when the add stop button is clicked.
+addStopBtn.addEventListener("click", function (event) {
+    insertInputRow(event);
+    handleStateOptions();
+});
 
+// The resetForm function is called when the reset form button is clicked.
+resetBtn.addEventListener("click", function (event) {
+    resetForm(event);
+    handleStateOptions();
+});
 
-//     const options = {
-//         method: 'GET',
-//         headers: {
-//             'X-RapidAPI-Key': '30f72d6795msh68cc89a67fcb9e7p1c5c49jsn45bfacd7bd58',
-//             'X-RapidAPI-Host': 'trueway-matrix.p.rapidapi.com'
-//         }
-//     };
-
-//     fetch('https://trueway-matrix.p.rapidapi.com/CalculateDrivingMatrix?origins=' + coordinates, options)
-//         .then(response => response.json())
-//         .then(data => {
-//             distance = data.distances[0];
-//             console.log(distance);
-//         })
-
-//         .catch(err => console.error(err));
-// }
-
-// The handleSubmit function is called when the save button on the form is clicked.
+// The handleSubmit function is called when the save button is clicked.
 saveBtn.addEventListener("click", handleSubmit);
+
+// Run autocomplete functionality for city input on page load.
+document.addEventListener('DOMContentLoaded', getCityAutocomplete);
+
+// Render select options for state input on page load.
+handleStateOptions();
