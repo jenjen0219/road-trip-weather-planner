@@ -21,7 +21,7 @@ body {
     font-size: 1.75rem;
     line-height: 1.5;
     background-image: url("../images/road.jpg");
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-position: center;
     background-size: cover;
     backdrop-filter: brightness(50%);
@@ -196,7 +196,6 @@ main {
     align-items: center;
     margin: 0;
     padding: 1.5rem;
-    /* border: 1px solid red; */
 }
 
 form {
@@ -228,6 +227,24 @@ form p {
 #save-btn:hover {
     color: var(--dark);
     background-color: var(--green);
+}
+
+.result-container h5 {
+    text-align: center;
+}
+
+#result-row {
+    margin: 2rem;
+}
+
+#result-row p {
+    color: var(--yellow);
+}
+
+#result-list li {
+    list-style: circle;
+    margin-left: 2rem;
+    font-size: 1.3rem;
 }
 
 footer {
