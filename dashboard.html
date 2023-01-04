@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,14 +27,14 @@
     <main>
         <section class="form-container">
             <form>
-                <div class="row" id="input-row">
+                <div class="row input-row">
                     <p>Departure Date</p>
                     <div class="input-field col s12">
-                        <input title="departure-date" id="departure-date" type="date" name="departure-date" class="validate">
+                        <input id="departure-date" type="date" name="departure-date" class="validate">
                     </div>
                 </div>
 
-                <div class="row" id="input-row">
+                <div class="row input-row">
                     <p>Starting Point</p>
                     <div class="input-field col s4">
                         <label class="active" for="city-0">
@@ -47,7 +46,7 @@
                         <label class="active" for="state-0">
                             State:
                         </label>
-                        <select title="state">
+                        <select>
                             <option value="" disabled selected>Choose state</option>
                         </select>
                     </div>
@@ -59,7 +58,7 @@
                     </div>
                 </div>
 
-                <div class="row" id="input-row">
+                <div class="row input-row">
                     <p>Stop 1</p>
                     <div class="input-field col s4">
                         <label class="active" for="city-1">
@@ -71,7 +70,7 @@
                         <label class="active" for="state-1">
                             State:
                         </label>
-                        <select title="state">
+                        <select>
                             <option value="" disabled selected>Choose state</option>
                         </select>
                     </div>
@@ -79,13 +78,13 @@
                         <label class="active" for="state-1">
                             Length of Stay (day):
                         </label>
-                        <input id="day1" type="number" min="0" name="days-1" placeholder="How many days">
+                        <input type="number" min="0" name="days-1" placeholder="How many days">
                     </div>
                 </div>
 
-                <div class="row" id="btn-container">
-                    <button class="button" id="add-stop-btn" type="button">+ Add Stop</button>
-                    <button class="button" id="reset-btn" type="button">Reset Form</button>
+                <div class="row btn-container">
+                    <button class="button" id="add-stop-btn">+ Add Stop</button>
+                    <button class="button" id="reset-btn">Reset Form</button>
                     <button class="button" id="save-btn" type="submit">Save</button>
                 </div>
             </form>
@@ -94,29 +93,29 @@
         <section class="result-container">
             <h5>Weather Forecast Along Your Travel Route</h5>
             <div class="weather-forecast"></div>
-            <!-- within this section I added the form and then added the class and id from the Email This button over to the submit button from the form -->
-            <form id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="https://formspree.io/f/meqwqalz"
-                method="post">
-                <fieldset id="fs-frm-inputs">
-
-                    <label for="email-address">Email Address</label>
-                    <input type="email" name="_replyto" id="email-address" placeholder="email@domain.tld" required="">
-                    <textarea rows="5" type="hidden" name="message" id="message" value="" required=""></textarea>
-                </fieldset>
-                <input type="submit" value="Submit" class="button" id="email-btn">
-            </form>
-            <!-- 
-            <button class="button" id="email-btn">
-                <a href="mailto:">
-                    <button class="button" id="email-btn" type="button">Email this</button>
-                </a>
-            </button> -->
+            <div class="btn-container">
+                <button class="button" id="recent-search-btn">
+                    Recent Search
+                </button>
+                <button class="button" id="clear-btn" disabled="disabled">
+                    Clear
+                </button>
+            </div>
+            <hr>
+            <div class="email-container">
+                <form class="email-form" method="post" onSubmit="" enctype="text/plain">
+                    <p>You can send the weather forecast to your email!</p>
+                    <label for="email-address">Email Address:</label>
+                    <input type="email" id="email-address" placeholder="email@domain.tld" required="">
+                    <input type="submit" value="Email this" class="button" id="email-btn" disabled="disabled">
+                </form>
+            </div>
         </section>
 
     </main>
 
     <footer>
-        <p>Footer goes here</p>
+        <p>© 2023 Arona, Claire, and Jennifer. All rights reserved.</p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
