@@ -1,4 +1,3 @@
-
 :root {
     --light: #E7E5DF;
     --medium: #b3afa9;
@@ -28,7 +27,10 @@ body {
     background-position: center;
     background-size: cover;
     backdrop-filter: brightness(50%);
-    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 h1,
@@ -77,25 +79,30 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .button {
-    width: 200px;
+    width: 160px;
+    font-size: 1.5rem;
     font-weight: bold;
     color: var(--light);
     background-color: transparent;
     border: 1px solid var(--light);
     border-radius: var(--border-radius);
-    margin: 1rem;
-    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    padding: 1rem 1rem;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7);
     transition: all 0.3s ease 0s;
 }
 
-.button:hover {
+.button:hover:not([disabled]) {
     transform: translateY(-7px);
     border: 1px solid var(--light);
 }
 
 .button:focus {
     background-color: transparent;
+}
+
+.button:disabled {
+    opacity: 0.5;
 }
 
 /* INDEX PAGE */
@@ -118,7 +125,7 @@ input[type=number]::-webkit-outer-spin-button {
 .index-main {
     text-align: center;
     margin: 1rem;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.5s linear;
 }
 
 .app-description {
@@ -170,28 +177,28 @@ input[type=number]::-webkit-outer-spin-button {
 /* DASHBOARD PAGE */
 header {
     width: 100%;
+    min-height: 15%;
     color: var(--light);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2.5rem 0 1.5rem 0;
 }
 
 main {
     width: 100%;
-    min-height: 80vh;
+    height: fit-content;
     color: var(--light);
     margin: 0 auto;
     padding: 2rem;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    transition: flex-basis 500ms linear;
+    transition: all 0.5s linear;
 }
 
 .form-container,
 .result-container {
-    width: 90%;
+    width: 95%;
     background: rgba(29, 39, 45, 0.7);
     border-radius: var(--border-radius);
     display: flex;
@@ -199,7 +206,7 @@ main {
     align-items: center;
     flex-grow: 1;
     margin: 1.5rem;
-    padding: 1.5rem;
+    padding: 3rem 1.5rem;
 }
 
 form {
@@ -212,9 +219,10 @@ form p {
     margin: 1rem;
 }
 
-#btn-container {
+.btn-container {
+    width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     margin: 0 auto;
 }
 
@@ -237,11 +245,11 @@ form p {
     text-align: center;
 }
 
-#result-row {
+.result-row {
     margin: 2rem;
 }
 
-#result-row p {
+.result-row p {
     color: var(--yellow);
 }
 
@@ -251,22 +259,61 @@ form p {
     font-size: 1.3rem;
 }
 
-#clear-btn:hover {
+#recent-search-btn:hover:not([disabled]){
+    color: var(--dark);
+    background-color: var(--green);
+}
+
+#clear-storage-btn {
+    font-size: 1.2rem;
+}
+
+#clear-storage-btn:hover:not([disabled]){
     color: var(--dark);
     background-color: var(--red);
+}
+
+#clear-content-btn:hover:not([disabled]) {
+    color: var(--dark);
+    background-color: var(--red);
+}
+
+hr {
+    width: 90%;
+    margin: 2rem;
+}
+
+.email-form {
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.email-form label {
+    width: 100%;
+}
+
+#email-btn {
+    align-self: center;
+}
+
+#email-btn:hover:not([disabled]) {
+    color: var(--dark);
+    background-color: var(--green);
 }
 
 footer {
     color: var(--light);
     width: 100%;
-    height: 10vh;
     text-align: center;
     margin: 0 auto;
-    padding: 0;
+    padding: 2rem;
 }
 
 /* For screens larger than 768px*/
 @media screen and (min-width: 768px) {
+
     .form-container,
     .result-container {
         flex: 0 0 50%;
