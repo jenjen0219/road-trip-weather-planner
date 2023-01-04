@@ -307,8 +307,8 @@ const handleSubmit = async function (event) {
             date : dateInputVal,
         }
         localStorage.setItem("previous trip destination", JSON.stringify(storage));
-
-
+        
+    
         await getCityCoordinates(dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum);
     };
 };
