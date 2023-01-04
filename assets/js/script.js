@@ -149,8 +149,7 @@ const resetForm = function (event) {
     <button class="button" id="add-stop-btn">+ Add Stop</button>
     <button class="button" id="reset-btn">Reset Form</button>
     <button class="button" id="save-btn" type="submit">Save</button>
-</div>
-`
+</div>`
 };
 
 // The getCityWeather function requests weather information for each city from the third api.

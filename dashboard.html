@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,7 +55,7 @@
                         <label class="active" for="day-0">
                             Length of Stay (day):
                         </label>
-                        <input id="day" type="number" min="0" name="day-0" placeholder="How many days">
+                        <input type="number" min="0" name="day-0" placeholder="How many days">
                     </div>
                 </div>
 
@@ -93,19 +94,23 @@
         <section class="result-container">
             <h5>Weather Forecast Along Your Travel Route</h5>
             <div class="weather-forecast"></div>
-            <div class="btn-container">
+            <!-- within this section I added the form and then added the class and id from the Email This button over to the submit button from the form -->
+            <form id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="https://formspree.io/f/meqwqalz"
+                method="post">
+                <fieldset id="fs-frm-inputs">
+
+                    <label for="email-address">Email Address</label>
+                    <input type="email" name="_replyto" id="email-address" placeholder="email@domain.tld" required="">
+                    <textarea rows="5" type="hidden" name="message" id="message" value="" required=""></textarea>
+                </fieldset>
+                <input type="submit" value="Submit" class="button" id="email-btn">
+            </form>
+            <!-- 
+            <button class="button" id="email-btn">
                 <a href="mailto:">
                     <button class="button" id="email-btn" type="button">Email this</button>
                 </a>
-                <!-- <button class="button" id="email-btn" type="button">
-                    <a href="mailto:">
-                        Email this
-                    </a>
-                </button> -->
-                <button class="button" id="clear-btn" type="button">
-                    Clear
-                </button>
-            </div>
+            </button> -->
         </section>
     </main>
 
