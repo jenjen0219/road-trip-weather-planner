@@ -6,7 +6,7 @@ Co-created an application to help people with properly dressing for their road t
 ## Usage
 
 Website landing page 
-![screenshot of landing page](assets/images/screenshot.intro.png)
+![screenshot of landing page](assets/images/screenshot.initial.png)
 
 Results of a simple roadtrip on the main portion of the website
 ![screenshot of dashboard](assets/images/screenshot.png)
@@ -28,6 +28,10 @@ Github Profile: https://github.com/roneprada
 Jennifer Gutierrez Manjares <br>
 API & Javascript Builder <br>
 Github Profile: https://github.com/jenjen0219 
+
+## Website Link 
+
+https://jenjen0219.github.io/road-trip-weather-planner/ 
 
 
 
