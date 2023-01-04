@@ -5,6 +5,8 @@ const addStopBtn = document.querySelector("#add-stop-btn");
 const resetBtn = document.querySelector("#reset-btn");
 const saveBtn = document.querySelector("#save-btn");
 const weatherForecastContainer = document.querySelector(".weather-forecast");
+const clearBtn = document.querySelector("#clear-btn");
+
 
 // Populate the list of autocomplete options for city input.
 const getCityAutocomplete = function () {
@@ -152,15 +154,9 @@ const resetForm = function (event) {
 
 // The getCityWeather function requests weather information for each city from the third api.
 const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum, coordinate) {
-    const dateObj = new Date(dateInputVal);
-    const formattedDate = dateObj.toLocaleDateString("en-US", {
-        weekday: "short",
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-    });
-
     const numOfDays = parseInt(dayInputVal);
+    const dateObj = new Date(dateInputVal);
+    const startDateObj = new Date(dateObj.setDate(dateObj.getDate() + parseInt(daySum)));
 
     const options = {
         method: 'GET',
@@ -171,7 +167,15 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
     };
 
     if (numOfDays === 0) {
-        const dateForURL = dateObj.toISOString().split(".")[0];
+        const currentDateObj = new Date(startDateObj.setDate(startDateObj.getDate() + 1));
+        const formattedDate = currentDateObj.toLocaleDateString("en-US", {
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+        });
+
+        const dateForURL = currentDateObj.toISOString().split(".")[0];
         const requestURL = 'https://dark-sky.p.rapidapi.com/' + coordinate + ',' + dateForURL + '?units=uk2';
 
         const response = await fetch(requestURL, options);
@@ -186,6 +190,9 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
         const tempMax = Math.round((data.daily.data[0].temperatureMax * 9 / 5) + 32);
         const humidity = data.daily.data[0].humidity * 100;
         const windSpeed = data.daily.data[0].windSpeed;
+
+        console.log(dateObj);
+        console.log(formattedDate);
 
         weatherForecastContainer.innerHTML +=
             `
@@ -208,8 +215,6 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
             <h6>${cityInputVal}, ${stateInputVal}</h6>
         </div>
         `
-
-        const startDateObj = new Date(dateObj.setDate(dateObj.getDate() + parseInt(daySum)));
 
         for (let i = 0; i < numOfDays; i++) {
             const currentDateObj = new Date(startDateObj.setDate(startDateObj.getDate() + 1));
@@ -235,6 +240,7 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
             const tempMax = Math.round((data.daily.data[0].temperatureMax * 9 / 5) + 32);
             const humidity = data.daily.data[0].humidity * 100;
             const windSpeed = data.daily.data[0].windSpeed;
+            
 
             const resultRowEl = weatherForecastContainer.querySelectorAll("#result-row");
             const lastResultRow = resultRowEl[resultRowEl.length - 1];
@@ -282,6 +288,8 @@ const handleSubmit = async function (event) {
     const inputRowEl = document.querySelectorAll("#input-row");
     let daySum = 0;
 
+    
+
     for (let i = 1; i < inputRowEl.length; i++) {
         if (i > 1) {
             const previousInputRow = inputRowEl[i - 1];
@@ -292,10 +300,25 @@ const handleSubmit = async function (event) {
         const cityInputVal = currentInputRow.getElementsByTagName("input")[0].value;
         const stateInputVal = currentInputRow.getElementsByTagName("input")[1].value;
         const dayInputVal = currentInputRow.getElementsByTagName("input")[2].value;
+    
+        var storage = {
+            city: cityInputVal,
+            state: stateInputVal,
+            date : dateInputVal,
+        }
+        localStorage.setItem("previous trip destination", JSON.stringify(storage));
+
 
         await getCityCoordinates(dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum);
     };
 };
+
+// The clearWeatherData function clears the weather forecast container.
+const clearWeatherData = function (event) {
+    event.preventDefault();
+
+    weatherForecastContainer.innerHTML = "";
+}
 
 // The insertInputRow function is called when the add stop button is clicked.
 addStopBtn.addEventListener("click", function (event) {
@@ -311,6 +334,9 @@ resetBtn.addEventListener("click", function (event) {
 
 // The handleSubmit function is called when the save button is clicked.
 saveBtn.addEventListener("click", handleSubmit);
+
+// The clearWeatherData function is called when the clear button is clicked.
+clearBtn.addEventListener("click", clearWeatherData);
 
 // Run autocomplete functionality for city input on page load.
 document.addEventListener('DOMContentLoaded', getCityAutocomplete);

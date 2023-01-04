@@ -1,3 +1,4 @@
+
 :root {
     --light: #E7E5DF;
     --medium: #b3afa9;
@@ -14,9 +15,11 @@
 
 html {
     font-size: 62.5%;
+    height: 100%;
 }
 
 body {
+    height: 100%;
     font-family: 'Roboto', sans-serif;
     font-size: 1.75rem;
     line-height: 1.5;
@@ -25,6 +28,7 @@ body {
     background-position: center;
     background-size: cover;
     backdrop-filter: brightness(50%);
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
 }
 
 h1,
@@ -180,21 +184,21 @@ main {
     margin: 0 auto;
     padding: 2rem;
     display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    transition: all 0.5s ease-in-out;
+    justify-content: center;
+    flex-wrap: wrap;
+    transition: flex-basis 500ms linear;
 }
 
 .form-container,
 .result-container {
-    width: 45%;
-    min-height: 70vh;
+    width: 90%;
     background: rgba(29, 39, 45, 0.7);
     border-radius: var(--border-radius);
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0;
+    flex-grow: 1;
+    margin: 1.5rem;
     padding: 1.5rem;
 }
 
@@ -247,6 +251,11 @@ form p {
     font-size: 1.3rem;
 }
 
+#clear-btn:hover {
+    color: var(--dark);
+    background-color: var(--red);
+}
+
 footer {
     color: var(--light);
     width: 100%;
@@ -254,4 +263,13 @@ footer {
     text-align: center;
     margin: 0 auto;
     padding: 0;
+}
+
+/* For screens larger than 768px*/
+@media screen and (min-width: 768px) {
+    .form-container,
+    .result-container {
+        flex: 0 0 50%;
+        max-width: 45%;
+    }
 }
