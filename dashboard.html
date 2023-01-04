@@ -94,17 +94,20 @@
             <h5>Weather Forecast Along Your Travel Route</h5>
             <div class="weather-forecast"></div>
             <div class="btn-container">
-                <button class="button" id="recent-search-btn">
+                <button class="button" id="recent-search-btn" disabled="disabled">
                     Recent Search
                 </button>
-                <button class="button" id="clear-btn" disabled="disabled">
-                    Clear
+                <button class="button" id="clear-storage-btn" disabled="disabled">
+                    Delete Search History
+                </button>
+                <button class="button" id="clear-content-btn" disabled="disabled">
+                    Clear Content
                 </button>
             </div>
             <hr>
             <div class="email-container">
                 <form class="email-form" method="post" onSubmit="" enctype="text/plain">
-                    <p>You can send the weather forecast to your email!</p>
+                    <p>Send the weather forecast to your email!</p>
                     <label for="email-address">Email Address:</label>
                     <input type="email" id="email-address" placeholder="email@domain.tld" required="">
                     <input type="submit" value="Email this" class="button" id="email-btn" disabled="disabled">

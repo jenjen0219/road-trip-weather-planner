@@ -5,12 +5,13 @@ const addStopBtn = document.querySelector("#add-stop-btn");
 const resetBtn = document.querySelector("#reset-btn");
 const saveBtn = document.querySelector("#save-btn");
 const weatherForecastContainer = document.querySelector(".weather-forecast");
-const clearBtn = document.querySelector("#clear-btn");
+const recentSearchBtn = document.querySelector("#recent-search-btn");
+const clearStorageBtn = document.querySelector("#clear-storage-btn");
+const clearContentBtn = document.querySelector("#clear-content-btn");
 const emailContainer = document.querySelector(".email-container");
 const emailFormEl = document.querySelector(".email-form");
 const emailInputVal = document.querySelector("#email-address").value;
 const emailBtn = document.querySelector("#email-btn");
-
 
 // Populate the list of autocomplete options for city input.
 const getCityAutocomplete = function () {
@@ -153,6 +154,78 @@ const resetForm = function (event) {
 `
 };
 
+// The getRecentSearchFromStorage function returns the recent search data.
+const getRecentSearchFromStorage = function () {
+    const recentSearchArr = localStorage.getItem('recent-search');
+    const storedArr = JSON.parse(recentSearchArr);
+    console.log("Search history found from local storage");
+    return storedArr;
+};
+
+// The storeSearchToStorage function stores the last search history to local storage.
+const storeSearchToStorage = function (dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum, coordinate) {
+    const newSearchObj = {
+        "date": dateInputVal,
+        "city": cityInputVal,
+        "state": stateInputVal,
+        "day": dayInputVal,
+        "daySum": daySum,
+        "coordinate": coordinate
+    }
+
+    if (!localStorage["recent-search"]) {
+        const newRecentSearchArr = [];
+        newRecentSearchArr.push(newSearchObj);
+        localStorage.setItem("recent-search", JSON.stringify(newRecentSearchArr));
+    }
+    else {
+        const recentSearchArr = getRecentSearchFromStorage();
+        recentSearchArr.push(newSearchObj);
+        localStorage.setItem("recent-search", JSON.stringify(recentSearchArr));
+    }
+    console.log("Search history stored in local storage");
+};
+
+// The handleStorageButtons function removes the disabled attribute from the recent search button and the delete search history button if there is stored data in local storage.
+const handleStorageButtons = function () {
+    if (localStorage["recent-search"]) {
+        recentSearchBtn.removeAttribute("disabled");
+        clearStorageBtn.removeAttribute("disabled");
+    }
+    else if (!localStorage["recent-search"]) {
+        recentSearchBtn.setAttribute("disabled", "disabled");
+        clearStorageBtn.setAttribute("disabled", "disabled");
+    }
+};
+
+const showRecentSearch = async function () {
+    if (localStorage["recent-search"]) {
+        weatherForecastContainer.innerHTML = "";
+
+        const recentSearchArr = getRecentSearchFromStorage();
+        console.log(recentSearchArr);
+
+        for (let i = 0; i < recentSearchArr.length; i++) {
+            const currentDayObj = recentSearchArr[i];
+            const date = currentDayObj["date"];
+            const city = currentDayObj["city"];
+            const state = currentDayObj["state"];
+            const day = currentDayObj["day"];
+            const daySum = currentDayObj["daySum"];
+            const coordinate = currentDayObj["coordinate"];
+            await getCityWeather(date, city, state, day, daySum, coordinate);
+        }
+        clearContentBtn.removeAttribute("disabled");
+        handleEmail();
+    }
+};
+
+const clearStorage = function () {
+    if (localStorage["recent-search"]) {
+        localStorage.removeItem("recent-search");
+    }
+};
+
 // The handleEmail function populates the email address and weather forecast data in mailto.
 const handleEmail = function () {
     emailBtn.removeAttribute("disabled")
@@ -288,6 +361,7 @@ const getCityCoordinates = async function (dateInputVal, cityInputVal, stateInpu
     const lonCoord = data[0].lon;
     const coordinate = latCoord + ',' + lonCoord;
     await getCityWeather(dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum, coordinate);
+    storeSearchToStorage(dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum, coordinate);
 };
 
 // The handleSubmit function takes input values and triggers functions to fetch city coordinates and weather forecast data.
@@ -295,6 +369,7 @@ const handleSubmit = async function (event) {
     event.preventDefault();
 
     weatherForecastContainer.innerHTML = "";
+    localStorage.clear();
 
     const dateInputVal = document.getElementById("departure-date").value
     const inputRowEl = document.querySelectorAll(".input-row");
@@ -314,7 +389,8 @@ const handleSubmit = async function (event) {
         await getCityCoordinates(dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum);
     };
 
-    clearBtn.removeAttribute("disabled");
+    clearContentBtn.removeAttribute("disabled");
+    handleStorageButtons();
     handleEmail();
 };
 
@@ -324,8 +400,9 @@ const clearWeatherData = function (event) {
 
     weatherForecastContainer.innerHTML = "";
 
-    clearBtn.setAttribute("disabled", "disabled");
+    clearContentBtn.setAttribute("disabled", "disabled");
     emailBtn.setAttribute("disabled", "disabled");
+    handleStorageButtons();
 }
 
 // The insertInputRow function is called when the add stop button is clicked.
@@ -343,11 +420,20 @@ resetBtn.addEventListener("click", function (event) {
 // The handleSubmit function is called when the save button is clicked.
 saveBtn.addEventListener("click", handleSubmit);
 
+// The getRecentSearch function is called when the recent search button is clicked.
+recentSearchBtn.addEventListener("click", showRecentSearch);
+
+// The clearStorage function is called when the delete search history button is clicked.
+clearStorageBtn.addEventListener("click", clearStorage);
+
 // The clearWeatherData function is called when the clear button is clicked.
-clearBtn.addEventListener("click", clearWeatherData);
+clearContentBtn.addEventListener("click", clearWeatherData);
 
 // Run autocomplete functionality for city input on page load.
 document.addEventListener('DOMContentLoaded', getCityAutocomplete);
 
 // Render select options for state input on page load.
 handleStateOptions();
+
+// Handle disabled attribute for recent search button and delete search history on page load.
+handleStorageButtons();
