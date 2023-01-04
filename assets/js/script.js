@@ -347,7 +347,7 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
 const getCityCoordinates = async function (dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum) {
     const APIKey = "4ef3772979be6dce53798914fca77969";
 
-    const requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityInputVal + ',' + stateInputVal + ',US&appid=' + APIKey;
+    const requestUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + cityInputVal + ',' + stateInputVal + ',US&appid=' + APIKey;
 
     const response = await fetch(requestUrl);
     console.log(response);
