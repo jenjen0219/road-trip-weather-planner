@@ -240,7 +240,7 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
             const tempMax = Math.round((data.daily.data[0].temperatureMax * 9 / 5) + 32);
             const humidity = data.daily.data[0].humidity * 100;
             const windSpeed = data.daily.data[0].windSpeed;
-            
+
 
             const resultRowEl = weatherForecastContainer.querySelectorAll("#result-row");
             const lastResultRow = resultRowEl[resultRowEl.length - 1];
@@ -288,7 +288,9 @@ const handleSubmit = async function (event) {
     const inputRowEl = document.querySelectorAll("#input-row");
     let daySum = 0;
 
-    
+    const emailText = document.querySelectorAll("message");
+
+
 
     for (let i = 1; i < inputRowEl.length; i++) {
         if (i > 1) {
@@ -300,17 +302,20 @@ const handleSubmit = async function (event) {
         const cityInputVal = currentInputRow.getElementsByTagName("input")[0].value;
         const stateInputVal = currentInputRow.getElementsByTagName("input")[1].value;
         const dayInputVal = currentInputRow.getElementsByTagName("input")[2].value;
-    
+
         var storage = {
             city: cityInputVal,
             state: stateInputVal,
-            date : dateInputVal,
+            date: dateInputVal,
         }
         localStorage.setItem("previous trip destination", JSON.stringify(storage));
 
 
         await getCityCoordinates(dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum);
     };
+
+    emailText.innerHTML = weatherForecastContainer;
+
 };
 
 // The clearWeatherData function clears the weather forecast container.
