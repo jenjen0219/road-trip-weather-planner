@@ -7,6 +7,7 @@ const saveBtn = document.querySelector("#save-btn");
 const weatherForecastContainer = document.querySelector(".weather-forecast");
 const clearBtn = document.querySelector("#clear-btn");
 
+
 // Populate the list of autocomplete options for city input.
 const getCityAutocomplete = function () {
     const options = {
@@ -148,8 +149,7 @@ const resetForm = function (event) {
     <button class="button" id="add-stop-btn">+ Add Stop</button>
     <button class="button" id="reset-btn">Reset Form</button>
     <button class="button" id="save-btn" type="submit">Save</button>
-</div>
-`
+</div>`
 };
 
 // The getCityWeather function requests weather information for each city from the third api.
@@ -240,6 +240,7 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
             const tempMax = Math.round((data.daily.data[0].temperatureMax * 9 / 5) + 32);
             const humidity = data.daily.data[0].humidity * 100;
             const windSpeed = data.daily.data[0].windSpeed;
+            
 
             const resultRowEl = weatherForecastContainer.querySelectorAll("#result-row");
             const lastResultRow = resultRowEl[resultRowEl.length - 1];
@@ -287,6 +288,8 @@ const handleSubmit = async function (event) {
     const inputRowEl = document.querySelectorAll("#input-row");
     let daySum = 0;
 
+    
+
     for (let i = 1; i < inputRowEl.length; i++) {
         if (i > 1) {
             const previousInputRow = inputRowEl[i - 1];
@@ -297,6 +300,14 @@ const handleSubmit = async function (event) {
         const cityInputVal = currentInputRow.getElementsByTagName("input")[0].value;
         const stateInputVal = currentInputRow.getElementsByTagName("input")[1].value;
         const dayInputVal = currentInputRow.getElementsByTagName("input")[2].value;
+    
+        var storage = {
+            city: cityInputVal,
+            state: stateInputVal,
+            date : dateInputVal,
+        }
+        localStorage.setItem("previous trip destination", JSON.stringify(storage));
+
 
         await getCityCoordinates(dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum);
     };
