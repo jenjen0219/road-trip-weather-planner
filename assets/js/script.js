@@ -1,12 +1,17 @@
 // Save reference to important DOM elements.
 const formEl = document.querySelector("form");
-const buttonContainer = document.querySelector("#btn-container");
+const buttonContainer = document.querySelector(".btn-container");
 const addStopBtn = document.querySelector("#add-stop-btn");
 const resetBtn = document.querySelector("#reset-btn");
 const saveBtn = document.querySelector("#save-btn");
 const weatherForecastContainer = document.querySelector(".weather-forecast");
-const clearBtn = document.querySelector("#clear-btn");
-
+const recentSearchBtn = document.querySelector("#recent-search-btn");
+const clearStorageBtn = document.querySelector("#clear-storage-btn");
+const clearContentBtn = document.querySelector("#clear-content-btn");
+const emailContainer = document.querySelector(".email-container");
+const emailFormEl = document.querySelector(".email-form");
+const emailInputVal = document.querySelector("#email-address").value;
+const emailBtn = document.querySelector("#email-btn");
 
 // Populate the list of autocomplete options for city input.
 const getCityAutocomplete = function () {
@@ -46,14 +51,13 @@ const handleStateOptions = function () {
 const insertInputRow = function (event) {
     event.preventDefault();
 
-    const inputRowEl = document.querySelectorAll("#input-row");
+    const inputRowEl = document.querySelectorAll(".input-row");
 
     const lastStopNum = parseInt(inputRowEl[inputRowEl.length - 1].children[0].innerText.substring(5));
     const newStopNum = lastStopNum + 1;
 
     const newInputRow = document.createElement("div");
-    newInputRow.classList = "row";
-    newInputRow.id = "input-row";
+    newInputRow.classList = "row input-row";
     newInputRow.innerHTML =
         `
 <p>Stop ${newStopNum}</p>
@@ -90,14 +94,13 @@ const resetForm = function (event) {
     formEl.innerHTML = "";
     formEl.innerHTML =
         `
-<div class="row" id="input-row">
+<div class="row input-row">
     <p>Departure Date</p>
     <div class="input-field col s12">
         <input id="departure-date" type="date" name="departure-date" class="validate">
     </div>
 </div>
-
-<div class="row" id="input-row">
+<div class="row input-row">
     <p>Starting Point</p>
     <div class="input-field col s4">
         <label class="active" for="city-0">
@@ -117,11 +120,10 @@ const resetForm = function (event) {
         <label class="active" for="day-0">
             Length of Stay (day):
         </label>
-        <input id="day" type="number" min="0" name="day-0" placeholder="How many days">
+        <input type="number" min="0" name="day-0" placeholder="How many days">
     </div>
 </div>
-
-<div class="row" id="input-row">
+<div class="row input-row">
     <p>Stop 1</p>
     <div class="input-field col s4">
         <label class="active" for="city-1">
@@ -141,15 +143,99 @@ const resetForm = function (event) {
         <label class="active" for="state-1">
             Length of Stay (day):
         </label>
-        <input id="day" type="number" min="0" name="days-1" placeholder="How many days">
+        <input type="number" min="0" name="days-1" placeholder="How many days">
     </div>
 </div>
-
-<div class="row" id="btn-container">
+<div class="row btn-container">
     <button class="button" id="add-stop-btn">+ Add Stop</button>
     <button class="button" id="reset-btn">Reset Form</button>
     <button class="button" id="save-btn" type="submit">Save</button>
-</div>`
+</div>
+`
+};
+
+// The getRecentSearchFromStorage function returns the recent search data.
+const getRecentSearchFromStorage = function () {
+    const recentSearchArr = localStorage.getItem('recent-search');
+    const storedArr = JSON.parse(recentSearchArr);
+    console.log("Search history found from local storage");
+    return storedArr;
+};
+
+// The storeSearchToStorage function stores the last search history to local storage.
+const storeSearchToStorage = function (dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum, coordinate) {
+    const newSearchObj = {
+        "date": dateInputVal,
+        "city": cityInputVal,
+        "state": stateInputVal,
+        "day": dayInputVal,
+        "daySum": daySum,
+        "coordinate": coordinate
+    }
+
+    if (!localStorage["recent-search"]) {
+        const newRecentSearchArr = [];
+        newRecentSearchArr.push(newSearchObj);
+        localStorage.setItem("recent-search", JSON.stringify(newRecentSearchArr));
+    }
+    else {
+        const recentSearchArr = getRecentSearchFromStorage();
+        recentSearchArr.push(newSearchObj);
+        localStorage.setItem("recent-search", JSON.stringify(recentSearchArr));
+    }
+    console.log("Search history stored in local storage");
+};
+
+// The handleStorageButtons function removes the disabled attribute from the recent search button and the delete search history button if there is stored data in local storage.
+const handleStorageButtons = function () {
+    if (localStorage["recent-search"]) {
+        recentSearchBtn.removeAttribute("disabled");
+        clearStorageBtn.removeAttribute("disabled");
+    }
+    else if (!localStorage["recent-search"]) {
+        recentSearchBtn.setAttribute("disabled", "disabled");
+        clearStorageBtn.setAttribute("disabled", "disabled");
+    }
+};
+
+const showRecentSearch = async function () {
+    if (localStorage["recent-search"]) {
+        weatherForecastContainer.innerHTML = "";
+
+        const recentSearchArr = getRecentSearchFromStorage();
+        console.log(recentSearchArr);
+
+        for (let i = 0; i < recentSearchArr.length; i++) {
+            const currentDayObj = recentSearchArr[i];
+            const date = currentDayObj["date"];
+            const city = currentDayObj["city"];
+            const state = currentDayObj["state"];
+            const day = currentDayObj["day"];
+            const daySum = currentDayObj["daySum"];
+            const coordinate = currentDayObj["coordinate"];
+            await getCityWeather(date, city, state, day, daySum, coordinate);
+        }
+        clearContentBtn.removeAttribute("disabled");
+        handleEmail();
+    }
+};
+
+const clearStorage = function () {
+    if (localStorage["recent-search"]) {
+        localStorage.removeItem("recent-search");
+    }
+};
+
+// The handleEmail function populates the email address and weather forecast data in mailto.
+const handleEmail = function () {
+    emailBtn.removeAttribute("disabled")
+
+    let content = weatherForecastContainer.innerText;
+    content = content.replace(/\r?\n|\r/g, "%0D%0A");
+
+    emailFormEl.setAttribute("onSubmit", "this.action='mailto:'+document.querySelector('#email-address').value+'?subject=Weather forecast along your travel route&body=" + content + "'");
+
+    return true;
 };
 
 // The getCityWeather function requests weather information for each city from the third api.
@@ -196,13 +282,13 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
 
         weatherForecastContainer.innerHTML +=
             `
-            <div id="result-row">
+            <div class="result-row">
                 <h6>${cityInputVal}, ${stateInputVal}</h6>
                 <p>Date: ${formattedDate}</p>
                 <ul id="result-list">
                     <li>Min Temperature: ${tempMin} ºF</li>
                     <li>Max Temperature: ${tempMax} ºF</li>
-                    <li>Humidity: ${humidity}%</li>
+                    <li>Humidity: ${humidity} %</li>
                     <li>WindSpeed: ${windSpeed}mph</li>
                 </ul>
             </div>
@@ -211,7 +297,7 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
     else {
         weatherForecastContainer.innerHTML +=
             `
-        <div id="result-row">
+        <div class="result-row">
             <h6>${cityInputVal}, ${stateInputVal}</h6>
         </div>
         `
@@ -240,9 +326,8 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
             const tempMax = Math.round((data.daily.data[0].temperatureMax * 9 / 5) + 32);
             const humidity = data.daily.data[0].humidity * 100;
             const windSpeed = data.daily.data[0].windSpeed;
-            
 
-            const resultRowEl = weatherForecastContainer.querySelectorAll("#result-row");
+            const resultRowEl = weatherForecastContainer.querySelectorAll(".result-row");
             const lastResultRow = resultRowEl[resultRowEl.length - 1];
             lastResultRow.innerHTML +=
                 `
@@ -250,7 +335,7 @@ const getCityWeather = async function (dateInputVal, cityInputVal, stateInputVal
                 <ul id="result-list">
                 <li>Min Temperature: ${tempMin} ºF</li>
                 <li>Max Temperature: ${tempMax} ºF</li>
-                <li>Humidity: ${humidity}%</li>
+                <li>Humidity: ${humidity} %</li>
                 <li>WindSpeed: ${windSpeed}mph</li>
                 </ul>
                 `
@@ -276,6 +361,7 @@ const getCityCoordinates = async function (dateInputVal, cityInputVal, stateInpu
     const lonCoord = data[0].lon;
     const coordinate = latCoord + ',' + lonCoord;
     await getCityWeather(dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum, coordinate);
+    storeSearchToStorage(dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum, coordinate);
 };
 
 // The handleSubmit function takes input values and triggers functions to fetch city coordinates and weather forecast data.
@@ -283,12 +369,11 @@ const handleSubmit = async function (event) {
     event.preventDefault();
 
     weatherForecastContainer.innerHTML = "";
+    localStorage.clear();
 
     const dateInputVal = document.getElementById("departure-date").value
-    const inputRowEl = document.querySelectorAll("#input-row");
+    const inputRowEl = document.querySelectorAll(".input-row");
     let daySum = 0;
-
-    
 
     for (let i = 1; i < inputRowEl.length; i++) {
         if (i > 1) {
@@ -300,17 +385,13 @@ const handleSubmit = async function (event) {
         const cityInputVal = currentInputRow.getElementsByTagName("input")[0].value;
         const stateInputVal = currentInputRow.getElementsByTagName("input")[1].value;
         const dayInputVal = currentInputRow.getElementsByTagName("input")[2].value;
-    
-        var storage = {
-            city: cityInputVal,
-            state: stateInputVal,
-            date : dateInputVal,
-        }
-        localStorage.setItem("previous trip destination", JSON.stringify(storage));
-
 
         await getCityCoordinates(dateInputVal, cityInputVal, stateInputVal, dayInputVal, daySum);
     };
+
+    clearContentBtn.removeAttribute("disabled");
+    handleStorageButtons();
+    handleEmail();
 };
 
 // The clearWeatherData function clears the weather forecast container.
@@ -318,6 +399,10 @@ const clearWeatherData = function (event) {
     event.preventDefault();
 
     weatherForecastContainer.innerHTML = "";
+
+    clearContentBtn.setAttribute("disabled", "disabled");
+    emailBtn.setAttribute("disabled", "disabled");
+    handleStorageButtons();
 }
 
 // The insertInputRow function is called when the add stop button is clicked.
@@ -335,11 +420,20 @@ resetBtn.addEventListener("click", function (event) {
 // The handleSubmit function is called when the save button is clicked.
 saveBtn.addEventListener("click", handleSubmit);
 
+// The getRecentSearch function is called when the recent search button is clicked.
+recentSearchBtn.addEventListener("click", showRecentSearch);
+
+// The clearStorage function is called when the delete search history button is clicked.
+clearStorageBtn.addEventListener("click", clearStorage);
+
 // The clearWeatherData function is called when the clear button is clicked.
-clearBtn.addEventListener("click", clearWeatherData);
+clearContentBtn.addEventListener("click", clearWeatherData);
 
 // Run autocomplete functionality for city input on page load.
 document.addEventListener('DOMContentLoaded', getCityAutocomplete);
 
 // Render select options for state input on page load.
 handleStateOptions();
+
+// Handle disabled attribute for recent search button and delete search history on page load.
+handleStorageButtons();
