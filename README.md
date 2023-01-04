@@ -18,16 +18,16 @@ Results of a simple roadtrip on the main portion of the website
 
 ## License
 
-Main Contributor - HTML/CSS/Javascript & API Builder - 
-Claire Hyung Won Cho
+Main Contributor - HTML/CSS/Javascript & API Builder <br>
+Claire Hyung Won Cho <br>
 GitHub Profile: https://github.com/clairehwcho 
 
-API & Javascript Builder - 
-Arona Gueye
+API & Javascript Builder <br>
+Arona Gueye <br>
 Github Profile: https://github.com/roneprada 
 
-API & Javascript Builder - 
-Jennifer Gutierrez Manjares 
+API & Javascript Builder <br>
+Jennifer Gutierrez Manjares <br>
 Github Profile: https://github.com/jenjen0219 
 
 
