@@ -30,7 +30,7 @@
                 <div class="row" id="input-row">
                     <p>Departure Date</p>
                     <div class="input-field col s12">
-                        <input id="departure-date" type="date" name="departure-date" class="validate">
+                        <input title="departure-date" id="departure-date" type="date" name="departure-date" class="validate">
                     </div>
                 </div>
 
@@ -46,7 +46,7 @@
                         <label class="active" for="state-0">
                             State:
                         </label>
-                        <select>
+                        <select title="state">
                             <option value="" disabled selected>Choose state</option>
                         </select>
                     </div>
@@ -70,7 +70,7 @@
                         <label class="active" for="state-1">
                             State:
                         </label>
-                        <select>
+                        <select title="state">
                             <option value="" disabled selected>Choose state</option>
                         </select>
                     </div>
@@ -78,13 +78,13 @@
                         <label class="active" for="state-1">
                             Length of Stay (day):
                         </label>
-                        <input id="day" type="number" min="0" name="days-1" placeholder="How many days">
+                        <input id="day1" type="number" min="0" name="days-1" placeholder="How many days">
                     </div>
                 </div>
 
                 <div class="row" id="btn-container">
-                    <button class="button" id="add-stop-btn">+ Add Stop</button>
-                    <button class="button" id="reset-btn">Reset Form</button>
+                    <button class="button" id="add-stop-btn" type="button">+ Add Stop</button>
+                    <button class="button" id="reset-btn" type="button">Reset Form</button>
                     <button class="button" id="save-btn" type="submit">Save</button>
                 </div>
             </form>
@@ -94,12 +94,15 @@
             <h5>Weather Forecast Along Your Travel Route</h5>
             <div class="weather-forecast"></div>
             <div class="btn-container">
-                <button class="button" id="email-btn">
+                <a href="mailto:">
+                    <button class="button" id="email-btn" type="button">Email this</button>
+                </a>
+                <!-- <button class="button" id="email-btn" type="button">
                     <a href="mailto:">
                         Email this
                     </a>
-                </button>
-                <button class="button" id="clear-btn">
+                </button> -->
+                <button class="button" id="clear-btn" type="button">
                     Clear
                 </button>
             </div>
