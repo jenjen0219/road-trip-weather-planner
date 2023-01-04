@@ -184,7 +184,7 @@ main {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    transition: flex-basis 500ms linear;
+    transition: all 0.5s linear;
 }
 
 .form-container,
