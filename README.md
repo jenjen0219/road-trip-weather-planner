@@ -17,17 +17,16 @@ Results of a simple roadtrip on the main portion of the website
 - Dark Sky Weather - Time Machine API
 
 ## License
-
-Main Contributor - HTML/CSS/Javascript & API Builder <br>
 Claire Hyung Won Cho <br>
+Main Contributor - HTML/CSS/Javascript & API Builder <br>
 GitHub Profile: https://github.com/clairehwcho 
 
-API & Javascript Builder <br>
 Arona Gueye <br>
+API & Javascript Builder <br>
 Github Profile: https://github.com/roneprada 
 
-API & Javascript Builder <br>
 Jennifer Gutierrez Manjares <br>
+API & Javascript Builder <br>
 Github Profile: https://github.com/jenjen0219 
 
 
