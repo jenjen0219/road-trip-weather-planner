@@ -249,6 +249,10 @@ form p {
     margin: 2rem;
 }
 
+.result-row h6 {
+    text-transform: capitalize;
+}
+
 .result-row p {
     color: var(--yellow);
 }

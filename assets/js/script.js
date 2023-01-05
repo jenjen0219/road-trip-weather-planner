@@ -51,6 +51,8 @@ const handleStateOptions = function () {
 const insertInputRow = function (event) {
     event.preventDefault();
 
+    console.log("test");
+
     const inputRowEl = document.querySelectorAll(".input-row");
 
     const lastStopNum = parseInt(inputRowEl[inputRowEl.length - 1].children[0].innerText.substring(5));
@@ -149,7 +151,7 @@ const resetForm = function (event) {
 <div class="row btn-container">
     <button class="button" id="add-stop-btn">+ Add Stop</button>
     <button class="button" id="reset-btn">Reset Form</button>
-    <button class="button" id="save-btn" type="submit">Save</button>
+    <button type="submit" class="button" id="save-btn">Save</button>
 </div>
 `
     getCityAutocomplete();
