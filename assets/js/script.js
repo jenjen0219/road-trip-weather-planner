@@ -152,6 +152,7 @@ const resetForm = function (event) {
     <button class="button" id="save-btn" type="submit">Save</button>
 </div>
 `
+    getCityAutocomplete();
 };
 
 // The getRecentSearchFromStorage function returns the recent search data.
