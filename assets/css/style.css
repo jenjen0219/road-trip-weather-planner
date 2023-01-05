@@ -95,6 +95,7 @@ input[type=number]::-webkit-outer-spin-button {
 .button:hover:not([disabled]) {
     transform: translateY(-7px);
     border: 1px solid var(--light);
+    cursor: pointer;
 }
 
 .button:focus {
@@ -247,6 +248,10 @@ form p {
 
 .result-row {
     margin: 2rem;
+}
+
+.result-row h6 {
+    text-transform: capitalize;
 }
 
 .result-row p {
